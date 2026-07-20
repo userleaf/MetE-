@@ -679,7 +679,7 @@
                 </div>
             </section>
 
-            <!-- 5. KARİYER VE İSTİHDAM -->
+           <!-- 5. KARİYER VE İSTİHDAM (YENİLENMİŞ DİNAMİK GRAFİKLERLE) -->
             <section id="kariyer" class="section">
                 <h2 class="section-title">İstihdam ve Kariyer</h2>
                 <p class="lead-text" style="color: var(--odtu-red); font-weight: bold;">Mezunlarımızın %95'inden fazlası ilk 1 yıl içinde istihdam ediliyor!</p>
@@ -709,7 +709,10 @@
                     <div class="card" style="text-align: center; padding: 30px; display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
                             <h4 style="color: var(--odtu-red); margin-top:0; font-size: 18px;">Mezunlarımız Hangi Sektörlerde Çalışıyor?</h4>
-                            <img src="image_5999bc.png" alt="Sektörel Dağılım Grafiği" style="width: 100%; max-width: 380px; height: auto; margin: 15px 0;">
+                            <!-- Dinamik Sektör Grafiği -->
+                            <div style="position: relative; height: 250px; width: 100%; margin: 20px 0;">
+                                <canvas id="sectorDoughnutChart"></canvas>
+                            </div>
                         </div>
                         <p style="font-size: 12.5px; color: var(--text-gray); margin: 0; text-align: left; background: var(--bg-light); padding: 10px; border-left: 3px solid var(--odtu-red);">
                             *Unutmayınız ki bazı sektörler iç içe girmiş durumdadır. Örneğin, havacılık ya da savunma sanayiinde çalışan bir kişi, kompozit malzemeler üzerinde de çalışıyor olabilir.
@@ -717,16 +720,55 @@
                     </div>
                     <div class="card" style="text-align: center; padding: 30px;">
                         <h4 style="color: var(--odtu-red); margin-top:0; font-size: 18px;">Mezunlarımız Hangi Şehirlerde Yaşıyor?</h4>
-                        <img src="image_5999c2.png" alt="Şehir Dağılım Grafiği" style="width: 100%; max-width: 350px; height: auto; margin-top: 15px;">
+                        <!-- Dinamik Şehir Grafiği -->
+                        <div style="position: relative; height: 280px; width: 100%; margin-top: 20px;">
+                            <canvas id="cityPieChart"></canvas>
+                        </div>
                     </div>
                 </div>
 
-                <div class="card" style="margin-top: 40px; text-align: center; padding: 40px 30px;">
-                    <h4 style="color: var(--odtu-red); margin-top:0; font-size: 22px;">Yurt Dışında Çalışan Mezunlarımız ve Küresel Temsiliyet</h4>
-                    <p style="font-size: 16px; margin-bottom: 30px; color: var(--text-dark);">
+                <!-- Küresel Mezun Ağı (Resim Yerine Şık CSS Tasarımı) -->
+                <div class="card" style="margin-top: 40px; padding: 40px 30px; background: linear-gradient(135deg, var(--dark-blue), #1a252f); color: white;">
+                    <h4 style="color: white; margin-top:0; font-size: 24px; text-align: center; border-bottom: 2px solid var(--odtu-red); padding-bottom: 15px; display: inline-block; width: 100%;">
+                        <i class="fa-solid fa-earth-americas" style="color: var(--odtu-red); margin-right: 10px;"></i> Küresel Mezun Ağımız
+                    </h4>
+                    <p style="font-size: 16px; margin-bottom: 30px; text-align: center; color: #bdc3c7;">
                         Mezunlarımız sadece Türkiye'de değil; Amerika'dan Avrupa'ya, Güney Afrika'dan Avustralya'ya kadar dünyanın dört bir yanındaki araştırma merkezlerinde ve küresel kurumlarda seçkin pozisyonlarda bölümümüzü başarıyla temsil etmektedir.
                     </p>
-                    <img src="image_5999a1.jpg" alt="Dünya çapında mezunlarımız ve çalışma alanlarımız" style="width: 100%; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15);">
+                    <div class="grid-4" style="gap: 15px; text-align: center;">
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                            <i class="fa-solid fa-building-columns" style="font-size: 24px; color: #f39c12; margin-bottom: 10px;"></i>
+                            <h5 style="margin: 0; font-size: 14px;">MIT (Massachusetts Institute of Technology)</h5>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                            <i class="fa-solid fa-building-columns" style="font-size: 24px; color: #f39c12; margin-bottom: 10px;"></i>
+                            <h5 style="margin: 0; font-size: 14px;">Columbia University</h5>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                            <i class="fa-solid fa-microscope" style="font-size: 24px; color: #3498db; margin-bottom: 10px;"></i>
+                            <h5 style="margin: 0; font-size: 14px;">Argonne National Laboratory</h5>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                            <i class="fa-solid fa-building-columns" style="font-size: 24px; color: #f39c12; margin-bottom: 10px;"></i>
+                            <h5 style="margin: 0; font-size: 14px;">University of California (Riverside)</h5>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                            <i class="fa-solid fa-industry" style="font-size: 24px; color: #2ecc71; margin-bottom: 10px;"></i>
+                            <h5 style="margin: 0; font-size: 14px;">Wits University (Johannesburg)</h5>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                            <i class="fa-solid fa-industry" style="font-size: 24px; color: #2ecc71; margin-bottom: 10px;"></i>
+                            <h5 style="margin: 0; font-size: 14px;">Aalto University (Finlandiya)</h5>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                            <i class="fa-solid fa-industry" style="font-size: 24px; color: #2ecc71; margin-bottom: 10px;"></i>
+                            <h5 style="margin: 0; font-size: 14px;">University of Waterloo (Kanada)</h5>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
+                            <i class="fa-solid fa-microscope" style="font-size: 24px; color: #3498db; margin-bottom: 10px;"></i>
+                            <h5 style="margin: 0; font-size: 14px;">UConn Tech Park (ABD)</h5>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -806,7 +848,7 @@
                 </div>
             </section>
 
-            <!-- 8. SSS (GENİŞLETİLMİŞ VE DETAYLANDIRILMIŞ) -->
+           <!-- 8. SSS (4 YENİ SORU İLE GENİŞLETİLMİŞ) -->
             <section id="sss" class="section">
                 <h2 class="section-title">Sıkça Sorulan Sorular</h2>
                 <p class="lead-text" style="font-size:15px;">Aday öğrencilerin bölümümüz, eğitim olanaklarımız ve kariyer fırsatları hakkında en çok merak ettiği konular aşağıda detaylandırılmıştır.</p>
@@ -865,13 +907,45 @@
                     </div>
                 </div>
                 
+                <!-- YENİ EKLENEN 4 S.S.S. MADDESİ -->
+                <button class="accordion">Öğrencilik Sürecinde Staj Zorunluluğu Var mı?</button>
+                <div class="panel">
+                    <div class="panel-content">
+                        <p>Evet, pratik mühendislik becerilerini kazanmanız amacıyla 2. ve 3. sınıfın yaz aylarında 21'er iş günü olmak üzere toplam 2 adet zorunlu yaz stajımız (MetE 300 ve MetE 400) bulunmaktadır.</p>
+                        <p>Öğrencilerimiz bu stajlarını ASELSAN, TUSAŞ, Erdemir, Şişecam gibi dev sanayi kuruluşlarında, otomotiv fabrikalarında veya TÜBİTAK MAM gibi ulusal araştırma merkezlerinde yaparak sektörle erkenden tanışmakta ve önemli bir tecrübe edinmektedirler.</p>
+                    </div>
+                </div>
+
+                <button class="accordion">Yüksek Lisans, Doktora ve Yurt Dışı Akademik Kariyer Olanakları Nasıldır?</button>
+                <div class="panel">
+                    <div class="panel-content">
+                        <p>ODTÜ METE'nin uluslararası tanınırlığı ve ABET akreditasyonu sayesinde mezunlarımızın diplomaları tüm dünyada geçerlidir.</p>
+                        <p>Mezunlarımızın önemli bir kısmı lisans eğitiminden sonra akademik kariyerine devam etmektedir. Öğrencilerimiz MIT, Stanford, Oxford, ETH Zürih, Max Planck Enstitüsü gibi dünyanın en prestijli eğitim ve araştırma kurumlarından tam burslu yüksek lisans ve doktora kabulleri alabilmektedir.</p>
+                    </div>
+                </div>
+
+                <button class="accordion">Bölümdeki Öğrenci Kulüpleri ve Sosyal Hayat Nasıldır?</button>
+                <div class="panel">
+                    <div class="panel-content">
+                        <p>ODTÜ, Türkiye'nin en canlı kampüs hayatına sahip üniversitesidir ve METE bölümü de bu ekosistemin önemli bir parçasıdır. Bölümümüzde öğrenciler tarafından yürütülen oldukça aktif bir <strong>Malzeme Bilimleri Topluluğu (MBT)</strong> bulunmaktadır.</p>
+                        <p>Bu topluluk yıl boyunca sektörün öncü firmalarıyla kariyer günleri, teknik fabrika gezileri, seminerler, mezun söyleşileri ve bahar şenlikleri kapsamında sosyal etkinlikler düzenleyerek öğrencilerimizin profesyonel iletişim ağlarını (network) kurmalarına yardımcı olmaktadır.</p>
+                    </div>
+                </div>
+
+                <button class="accordion">Mezun Olduktan Sonra Kendi Şirketimi Kurabilir miyim?</button>
+                <div class="panel">
+                    <div class="panel-content">
+                        <p>Kesinlikle evet. Malzeme mühendisliği, inovasyona ve start-up (girişimcilik) kültürüne en açık mühendislik dallarından biridir. İleri teknoloji alaşımlar, batarya teknolojileri, 3 boyutlu yazıcı filamentleri veya biyomedikal implantlar üzerine pek çok yenilikçi fikir şirketleşmeye müsaittir.</p>
+                        <p>Öğrencilerimiz ve mezunlarımız, Türkiye'nin ilk teknokenti olan <strong>ODTÜ Teknokent</strong> ve kuluçka merkezi <strong>ATOM</strong>'un sunduğu mentörlük, laboratuvar ve hibe desteklerinden faydalanarak kendi teknoloji şirketlerini kurabilmekte ve girişimcilik ekosistemine güçlü bir adım atabilmektedirler.</p>
+                    </div>
+                </div>
+
                 <div style="text-align: center; margin-top: 30px;">
                     <a href="http://adayogrenci.metu.edu.tr/" target="_blank" style="display: inline-block; background-color: var(--odtu-red); color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 16px; transition: 0.3s; box-shadow: 0 4px 15px rgba(203,32,39,0.3);">
                         Daha Fazla Bilgi İçin ODTÜ Aday Öğrenci Sayfasını Ziyaret Edin
                     </a>
                 </div>
             </section>
-
     <!-- Hoca Detay Modalı -->
     <div id="facultyModal" class="modal">
         <div class="modal-content">
