@@ -51,6 +51,90 @@ document.addEventListener("DOMContentLoaded", () => {
             options: { responsive: true, indexAxis: 'y', plugins: { legend: { display: false }, title: { display: true, text: 'Unvana Göre Kişi Sayısı' } } }
         });
     }
+    if (document.getElementById('sectorDoughnutChart')) {
+        new Chart(document.getElementById('sectorDoughnutChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Akademik', 'Savunma Sanayi', 'Demir-Çelik ve Döküm', 'Otomotiv Sanayi', 'Enerji', 'Bilişim', 'Kompozit', 'Diğer'],
+                datasets: [{
+                    data: [26, 24, 18, 15, 5, 1, 1, 10],
+                    backgroundColor: [
+                        '#c0392b', // Kırmızı (Akademik)
+                        '#2980b9', // Mavi (Savunma)
+                        '#8e44ad', // Mor (Demir Çelik)
+                        '#8cc63f', // Yeşil (Otomotiv)
+                        '#16a085', // Turkuaz (Enerji)
+                        '#f39c12', // Turuncu (Bilişim)
+                        '#e67e22', // Koyu Turuncu (Kompozit)
+                        '#7f8c8d'  // Gri (Diğer)
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        labels: { boxWidth: 12, font: { size: 11 } }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return ' ' + context.label + ': %' + context.raw;
+                            }
+                        }
+                    }
+                },
+                cutout: '60%' // Ortası delik (Doughnut) görünümü için
+            }
+        });
+    }
+
+    // 2. Şehir Dağılımı Grafiği (Pie Chart)
+    if (document.getElementById('cityPieChart')) {
+        new Chart(document.getElementById('cityPieChart'), {
+            type: 'pie',
+            data: {
+                labels: ['Ankara', 'İstanbul', 'İzmir', 'Kocaeli', 'Bursa', 'Eskişehir', 'Zonguldak', 'Diğer'],
+                datasets: [{
+                    // Orijinal grafikteki dilim büyüklüklerine göre yaklaşımlı oranlar
+                    data: [45, 20, 10, 7, 7, 4, 2, 5],
+                    backgroundColor: [
+                        '#c0392b', // Ankara (Büyük dilim)
+                        '#3498db', // İstanbul
+                        '#8cc63f', // İzmir
+                        '#9b59b6', // Kocaeli
+                        '#f1c40f', // Bursa
+                        '#34495e', // Eskişehir
+                        '#1abc9c', // Zonguldak
+                        '#95a5a6'  // Diğer
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#ffffff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { boxWidth: 12, font: { size: 11 } }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return ' ' + context.label + ': %' + context.raw;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
 
     // --- 2. AKADEMİK KADRO (Temel Bilgiler) ---
     // Yayınlar ve Projeler artık boş, data.csv'den otomatik doldurulacak!
