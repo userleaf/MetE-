@@ -81,12 +81,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- 2. AKADEMİK KADRO VE YAYIN VERİLERİ ---
-    // Site ismi tekrarı giderilmiş, temizlenmiş resim linkleri
+    // --- 2. AKADEMİK KADRO VE YAYIN VERİLERİ (GÜNCEL RESİM LİNKLERİ İLE) ---
     const facultyData = [
         {
             name: "Prof. Dr. Kadri Aydınol", title: "Bölüm Başkanı",
-            image: "https://mete.metu.edu.tr/files/kadri_aydinol.jpg",
+            image: "https://mete.metu.edu.tr/system/files/Images/peoplePhotos/faculty/_s2a9401.jpg",
             research: ["Enerji Depolama Malzemeleri", "Enerji Depolama Cihazları Tasarımı"],
             details: ["Doktora: 1994, ODTÜ", "Doktora Sonrası: 1998, MIT", "Laboratuvar: Batarya ve Enerji Depolama Cihazları Laboratuvarı"],
             publications: [
@@ -97,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             name: "Doç. Dr. Simge Çınar Aygün", title: "Bölüm Başkan Yardımcısı",
-            image: "https://mete.metu.edu.tr/files/simge_cinar.jpg",
+            image: "https://mete.metu.edu.tr/system/files/Images/peoplePhotos/faculty/simge_cinar_foto.jpg",
             research: ["Sıvı Akış Bataryaları", "Reoloji", "Kolloid ve Yüzey Bilimi", "Mikro/Nano Malzeme Sentezi", "Seramiklerin Eklemeli İmalatı"],
             details: ["Doktora: 2013, Iowa State University, ABD", "Laboratuvar: Kolloid Laboratuvarı"],
             publications: [
@@ -108,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             name: "Dr. Öğr. Üy. Yusuf Keleştemur", title: "Bölüm Başkan Yardımcısı",
-            image: "https://mete.metu.edu.tr/files/yusuf_kelestemur.jpg",
+            image: "https://mete.metu.edu.tr/system/files/Images/peoplePhotos/faculty/yusufkelestemur.png",
             research: ["Kolloidal Yarıiletken Nanokristaller", "Yarıiletken Nanokristallerin Sentezi", "Optoelektronik Uygulamalar"],
             details: ["Doktora: 2017, Bilkent Üniversitesi", "Doktora Sonrası: ETH Zürich", "Laboratuvar: Fonksiyonel Nanomalzemeler Laboratuvarı"],
             publications: [
@@ -119,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             name: "Prof. Dr. Abdullah Öztürk", title: "Öğretim Üyesi",
-            image: "https://mete.metu.edu.tr/files/abdullah_ozturk.jpg",
+            image: "https://mete.metu.edu.tr/system/files/Images/peoplePhotos/faculty/_s2a9895_0.jpg",
             research: ["Seramik Malzemeler", "Yapısal Seramikler", "Cam ve Cam Seramikler", "Fotokatalitik Malzemeler"],
             details: ["Doktora: 1991, University of Missouri-Rolla, ABD", "Laboratuvar: Cam Bilimi ve Fotokatalitik Malzemeler Lab."],
             publications: [
@@ -130,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             name: "Prof. Dr. Arcan F. Dericioğlu", title: "Öğretim Üyesi",
-            image: "https://mete.metu.edu.tr/files/arcan_dericioglu.jpg",
+            image: "https://mete.metu.edu.tr/system/files/Images/peoplePhotos/faculty/adericioglu.jpg",
             research: ["Elektromanyetik Dalgalarla Madde Etkileşimi", "Alaşımların Eklemeli İmalatı"],
             details: ["Doktora: 2002, The University of Tokyo, Japonya", "Laboratuvar: Electromagnetic Materials Laboratory"],
             publications: [
@@ -141,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             name: "Doç. Dr. Batur Ercan", title: "Öğretim Üyesi",
-            image: "https://mete.metu.edu.tr/files/batur_ercan.jpg",
+            image: "https://mete.metu.edu.tr/system/files/Images/peoplePhotos/faculty/ercanbatur.jpg",
             research: ["Anodizasyon", "Yüzey Modifikasyonları", "Biyomalzemeler", "Doku Mühendisliği"],
             details: ["Doktora: 2011, Brown Üniversitesi", "Doktora Sonrası: Harvard Tıp & Northeastern", "Laboratuvar: Biyomalzeme ve Nanotıp Laboratuvarı"],
             publications: [
@@ -152,21 +151,21 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             name: "Doç. Dr. Bilge İmer", title: "Öğretim Üyesi",
-            image: "https://mete.metu.edu.tr/files/bilge_imer.jpg",
+            image: "https://mete.metu.edu.tr/system/files/Images/peoplePhotos/faculty/bilgeimer.jpg",
             research: ["MOCVD ile Nitrürlü Malzemeler", "CVD/PVD ile Yarıiletken Optoelektronik", "Optik ve Yapısal İnce Film Kaplamalar"],
             details: ["Doktora: 2006, UCSB, ABD", "Laboratuvar: İnce Film, Optoelektronik ve Kuantum Malzemeler Lab."],
             publications: []
         },
         {
             name: "Prof. Dr. Bilgehan Ögel", title: "Öğretim Üyesi",
-            image: "https://mete.metu.edu.tr/files/bilgehan_ogel.jpg",
+            image: "https://mete.metu.edu.tr/system/files/Images/peoplePhotos/faculty/_s2a7364.jpg",
             research: ["Mikroyapı-Özellik İlişkisi", "Hasar Analizi", "Metallerin Isıl İşlemi", "Toz Metalurjisi"],
             details: ["Doktora: 1990, ODTÜ", "Laboratuvar: Bainite Research Laboratory"],
             publications: []
         },
         {
             name: "Prof. Dr. C. Hakan Gür", title: "Öğretim Üyesi",
-            image: "https://mete.metu.edu.tr/files/hakan_gur.jpg",
+            image: "https://mete.metu.edu.tr/system/files/Images/peoplePhotos/faculty/chg_ekim_2024.jpg",
             research: ["Isıl İşlem", "Mekanik Metalurji", "Kalıntı Gerilme", "Tahribatsız Muayene"],
             details: ["Doktora: 1995, ODTÜ", "Doktora Sonrası: BAM-Berlin", "Laboratuvar: NDT and Welding Research Center"],
             publications: [
@@ -177,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             name: "Prof. Dr. Caner Durucan", title: "Öğretim Üyesi",
-            image: "https://mete.metu.edu.tr/files/caner_durucan.jpg",
+            image: "https://mete.metu.edu.tr/system/files/Images/peoplePhotos/faculty/canerdurucan.jpg",
             research: ["Seramik ve Cam Malzemeler", "Biyoseramikler"],
             details: ["Doktora: 2003, Pennsylvania State University, ABD", "Laboratuvar: Bioceramics and Materials Chemistry Laboratory"],
             publications: [
@@ -188,7 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             name: "Prof. Dr. Cevdet Kaynak", title: "Öğretim Üyesi",
-            image: "https://mete.metu.edu.tr/files/cevdet_kaynak.jpg",
+            image: "https://mete.metu.edu.tr/system/files/Images/peoplePhotos/faculty/2016-06.jpg",
             research: ["Polimerler", "Makro, Mikro ve Nano-Kompozitler"],
             details: ["Doktora: 1994, Imperial College, İngiltere", "Laboratuvar: Polimerler ve Kompozitler Laboratuvarı"],
             publications: [
@@ -199,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             name: "Doç. Dr. Çiğdem Toparlı", title: "Öğretim Üyesi",
-            image: "https://mete.metu.edu.tr/files/cigdem_toparli.jpg",
+            image: "https://mete.metu.edu.tr/system/files/Images/peoplePhotos/faculty/cidem_toparli.png",
             research: ["Elektrokimya", "Elektrokataliz", "Enerji Dönüşümü ve Depolama", "Korozyon"],
             details: ["Doktora: 2017, Max-Planck-Institut, Almanya", "Doktora Sonrası: MIT", "Laboratuvar: Laboratory for Electrochemical Energy Materials"],
             publications: [
@@ -210,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             name: "Prof. Dr. H. Emrah Ünalan", title: "Öğretim Üyesi",
-            image: "https://mete.metu.edu.tr/files/emrah_unalan.jpg",
+            image: "https://mete.metu.edu.tr/system/files/Images/peoplePhotos/faculty/_s2a1059_0.jpg",
             research: ["Nanomalzemeler", "Elektronik Cihazlar"],
             details: ["Doktora: 2006, Rutgers Üniversitesi, ABD", "Doktora Sonrası: Cambridge Üniversitesi", "Laboratuvar: Nanomalzemeler ve Elektronik Cihazlar Laboratuvarı"],
             publications: [
@@ -221,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             name: "Dr. Öğr. Üy. Irmak Sargın", title: "Öğretim Üyesi",
-            image: "https://mete.metu.edu.tr/files/irmak_sargin.jpg",
+            image: "https://mete.metu.edu.tr/system/files/Images/peoplePhotos/faculty/sargin_photo.jpg",
             research: ["Malzeme Enformatiği", "Akıllı Malzemeler", "Zırh Malzemeleri", "Kritik Malzemeler"],
             details: ["Doktora: Iowa Eyalet Üniversitesi", "Doktora Sonrası: MIT", "Laboratuvar: Materials Informatics Solutions (MISLab)"],
             publications: [
@@ -232,14 +231,14 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             name: "Dr. Öğr. Üy. İrem Nur Gamze Özbilgin", title: "Öğretim Üyesi",
-            image: "https://mete.metu.edu.tr/files/irem_ozbilgin.jpg",
+            image: "https://mete.metu.edu.tr/system/files/Files/iremnurgamzeozbilgin.jpg",
             research: ["Malzeme Bilimi ve Mühendisliği Temel Uygulamaları", "Sürdürülebilir Malzemeler"],
             details: ["Detaylı profil bilgisi için METE web sitesini ziyaret edebilirsiniz."],
             publications: []
         },
         {
             name: "Dr. Öğr. Üy. Şeniz Uçar", title: "Öğretim Üyesi",
-            image: "https://mete.metu.edu.tr/files/seniz_ucar.jpg",
+            image: "https://mete.metu.edu.tr/system/files/Images/peoplePhotos/visitingResearchers/_s2a1059.jpg",
             research: ["Kristalizasyon", "Parçacık Dizaynı"],
             details: ["Doktora: 2017, NTNU, Norveç", "Laboratuvar: Kristalizasyon ve Parçacık Dizaynı (CPD Lab)"],
             publications: [
@@ -250,7 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         {
             name: "Prof. Dr. Y. Eren Kalay", title: "Öğretim Üyesi",
-            image: "https://mete.metu.edu.tr/files/eren_kalay.jpg",
+            image: "https://mete.metu.edu.tr/system/files/Images/peoplePhotos/faculty/_s2a9557.jpg",
             research: ["Malzeme Karakterizasyonu", "Metalik Alaşımlar", "Elektronik Paketleme"],
             details: ["Doktora: 2009, Iowa State University, ABD", "Laboratuvar: Metal Alaşımları Geliştirme Elektron Mikroskobu Lab."],
             publications: [
