@@ -379,6 +379,39 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            /* Grafikler sıkışmasın diye eklenen kurallar */
+            min-height: 300px; 
+            padding-top: 15px;
+        }
+        canvas {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        /* Social Media Section */
+        .social-media {
+            background-color: var(--dark-blue);
+            color: white;
+            padding: 40px 60px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        .social-icons a {
+            color: white;
+            font-size: 36px;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        .social-icons a:hover {
+            color: var(--odtu-red);
+            transform: translateY(-5px);
         }
 
         /* Mobil Uyum */
@@ -419,6 +452,8 @@
             .modal-content { width: 95%; margin: 15% auto; }
             .modal-body { padding: 15px; max-height: 65vh; overflow-y: auto; }
             .modal-header h2 { font-size: 20px; }
+            .social-media { padding: 30px 20px; }
+            .chart-container { min-height: 250px; }
         }
     </style>
 </head>
@@ -514,7 +549,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="card chart-container" style="margin-top:20px; padding:20px; height: 260px;">
+                        <div class="card chart-container" style="margin-top:20px; padding:20px;">
                             <canvas id="yksLineChart"></canvas>
                         </div>
                     </div>
@@ -718,7 +753,7 @@
                     <div class="card" style="text-align: center; padding: 30px; display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
                             <h4 style="color: var(--odtu-red); margin-top:0; font-size: 18px;">Mezunlarımız Hangi Sektörlerde Çalışıyor?</h4>
-                            <div class="chart-container" style="height: 250px; margin: 20px 0;">
+                            <div class="chart-container">
                                 <canvas id="sectorDoughnutChart"></canvas>
                             </div>
                         </div>
@@ -726,9 +761,10 @@
                             *Unutmayınız ki bazı sektörler iç içe girmiş durumdadır. Örneğin, havacılık ya da savunma sanayiinde çalışan bir kişi, kompozit malzemeler üzerinde de çalışıyor olabilir.
                         </p>
                     </div>
+                    <!-- USER REQUESTED FIX: Yurtdışı Grafiği -->
                     <div class="card" style="text-align: center; padding: 30px;">
                         <h4 style="color: var(--odtu-red); margin-top:0; font-size: 18px;">Mezunlarımız Yurtdışında da çalışabiliyor mu?</h4>
-                        <div class="chart-container" style="height: 280px; margin-top: 20px;">
+                        <div class="chart-container">
                             <canvas id="cityPieChart"></canvas>
                         </div>
                     </div>
@@ -760,15 +796,15 @@
                             <h5 style="margin: 0; font-size: 14px;">University of California (Riverside)</h5>
                         </div>
                         <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
-                            <i class="fa-solid fa-building-columns" style="font-size: 24px; color: #2ecc71; margin-bottom: 10px;"></i>
+                            <i class="fa-solid fa-industry" style="font-size: 24px; color: #2ecc71; margin-bottom: 10px;"></i>
                             <h5 style="margin: 0; font-size: 14px;">Wits University (Johannesburg)</h5>
                         </div>
                         <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
-                            <i class="fa-solid fa-building-columns" style="font-size: 24px; color: #2ecc71; margin-bottom: 10px;"></i>
+                            <i class="fa-solid fa-industry" style="font-size: 24px; color: #2ecc71; margin-bottom: 10px;"></i>
                             <h5 style="margin: 0; font-size: 14px;">Aalto University (Finlandiya)</h5>
                         </div>
                         <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
-                            <i class="fa-solid fa-building-columns" style="font-size: 24px; color: #2ecc71; margin-bottom: 10px;"></i>
+                            <i class="fa-solid fa-industry" style="font-size: 24px; color: #2ecc71; margin-bottom: 10px;"></i>
                             <h5 style="margin: 0; font-size: 14px;">University of Waterloo (Kanada)</h5>
                         </div>
                         <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 8px;">
@@ -804,9 +840,11 @@
                 </div>
                 
                 <div class="grid-2" style="margin-top:30px;">
-                    <div class="card chart-container" style="padding:20px; height: 260px;">
-                        <h3 style="color:var(--dark-blue); margin-top:0; position:absolute; top:20px; left:20px; z-index:10;">Yıllık Ortalama Mezun Dağılımı</h3>
-                        <canvas id="mezunBarChart"></canvas>
+                    <div class="card" style="padding:20px;">
+                        <h3 style="color:var(--dark-blue); margin-top:0;">Yıllık Ortalama Mezun Dağılımı</h3>
+                        <div class="chart-container">
+                            <canvas id="mezunBarChart"></canvas>
+                        </div>
                     </div>
                     <div class="card" style="padding:20px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
                         <i class="fa-solid fa-file-lines" style="font-size:36px; color:var(--odtu-red); margin-bottom:10px;"></i>
@@ -841,11 +879,15 @@
                         </div>
                     </div>
                     <div class="grid-2" style="gap:20px;">
-                        <div class="card chart-container" style="padding:20px; height: 260px;">
-                            <canvas id="facultyPieChart"></canvas>
+                        <div class="card" style="padding:20px;">
+                            <div class="chart-container" style="min-height: 250px;">
+                                <canvas id="facultyPieChart"></canvas>
+                            </div>
                         </div>
-                        <div class="card chart-container" style="padding:20px; height: 260px;">
-                            <canvas id="facultyBarChart"></canvas>
+                        <div class="card" style="padding:20px;">
+                            <div class="chart-container" style="min-height: 250px;">
+                                <canvas id="facultyBarChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -930,11 +972,12 @@
                     </div>
                 </div>
 
+                <!-- USER REQUESTED FIX: Metalurji Topluluğu Eklendi -->
                 <button class="accordion">Bölümdeki Öğrenci Kulüpleri ve Sosyal Hayat Nasıldır?</button>
                 <div class="panel">
                     <div class="panel-content">
-                        <p>ODTÜ, Türkiye'nin en canlı kampüs hayatına sahip üniversitesidir ve METE bölümü de bu ekosistemin önemli bir parçasıdır. Bölümümüzde öğrenciler tarafından yürütülen oldukça aktif bir <strong>Malzeme Bilimleri Topluluğu (MBT)</strong> bulunmaktadır.</p>
-                        <p>Bu topluluk yıl boyunca sektörün öncü firmalarıyla kariyer günleri, teknik fabrika gezileri, seminerler, mezun söyleşileri ve bahar şenlikleri kapsamında sosyal etkinlikler düzenleyerek öğrencilerimizin profesyonel iletişim ağlarını (network) kurmalarına yardımcı olmaktadır.</p>
+                        <p>ODTÜ, Türkiye'nin en canlı kampüs hayatına sahip üniversitesidir ve METE bölümü de bu ekosistemin önemli bir parçasıdır. Bölümümüzde öğrenciler tarafından yürütülen oldukça aktif bir <strong>Malzeme Bilimleri Topluluğu (MBT)</strong> ve <strong>Metalurji Topluluğu</strong> bulunmaktadır.</p>
+                        <p>Bu topluluklar yıl boyunca sektörün öncü firmalarıyla kariyer günleri, teknik fabrika gezileri, seminerler, mezun söyleşileri ve bahar şenlikleri kapsamında sosyal etkinlikler düzenleyerek öğrencilerimizin profesyonel iletişim ağlarını (network) kurmalarına yardımcı olmaktadır.</p>
                     </div>
                 </div>
 
@@ -952,9 +995,21 @@
                     </a>
                 </div>
             </section>
+            
+            <!-- YENİ EKLENEN: Sosyal Medya ve İletişim -->
+            <section class="social-media">
+                <h2 style="margin-top: 0; font-size: 28px; border-bottom: 2px solid var(--odtu-red); display: inline-block; padding-bottom: 10px;">Bizi Takip Edin</h2>
+                <p style="font-size: 16px; margin-top: 15px; color: #ecf0f1;">ODTÜ Metalurji ve Malzeme Mühendisliği bölümündeki güncel etkinlikler, araştırma haberleri ve akademik duyurulardan anında haberdar olmak için resmi hesaplarımızı takip edebilirsiniz.</p>
+                <div class="social-icons">
+                    <a href="https://mete.metu.edu.tr/" target="_blank" title="Resmi Web Sitesi"><i class="fa-solid fa-globe"></i></a>
+                    <a href="https://www.linkedin.com/company/metallurgical-and-materials-engineering-metu/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://www.youtube.com/@ODTUMetalurjiMalzeme" target="_blank" title="YouTube"><i class="fa-brands fa-youtube" style="color: #ff0000;"></i></a>
+                    <a href="https://www.instagram.com/odtumetalurjimalzeme/?hl=en" target="_blank" title="Instagram"><i class="fa-brands fa-instagram" style="background: -webkit-linear-gradient(#f09433, #e6683c, #dc2743, #cc2366, #bc1888); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i></a>
+                </div>
+            </section>
 
-        </main> <!-- DÜZELTİLDİ: main etiketi burada kapanmalı -->
-    </div> <!-- DÜZELTİLDİ: dashboard divi burada kapanmalı -->
+        </main>
+    </div>
 
     <!-- Hoca Detay Modalı -->
     <div id="facultyModal" class="modal">
@@ -969,7 +1024,7 @@
                 <h4>Laboratuvar & Akademik Bilgiler</h4>
                 <ul id="modalDetails"></ul>
                 
-                <!-- YENİ: Dinamik Projeler Alanı -->
+                <!-- Dinamik Projeler Alanı -->
                 <div id="modalProjectsContainer" style="display: none; margin-bottom: 20px;">
                     <h4>Yürütülen Projeler</h4>
                     <ul id="modalProjects" style="font-size: 14.5px; line-height: 1.5; color: var(--text-gray); padding-left: 15px; list-style-type: disc;"></ul>
