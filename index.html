@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ODTÜ METE - Kapsamlı Tanıtım Sunumu</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Chart.js için daha stabil ve yaygın CDN bağlantısı -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root {
+--odtu-red: #cb2027;
+--odtu-dark-red: #a0181e;
+--dark-blue: #2c3e50;
+--text-dark: #333333;
+--text-gray: #666666;
+--bg-light: #f8f9fa;
+--bg-gray: #e9ecef;
+--white: #ffffff;
+}
+
+body, html {
+margin: 0;
+padding: 0;
+font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+color: var(--text-dark);
+background-color: var(--bg-light);
+scroll-behavior: smooth;
+}
+
+* {
+box-sizing: border-box;
+}
+
+/* Layout Structure */
+.dashboard {
+display: flex;
+min-height: 100vh;
+}
+
+/* Sidebar Navigation */
+.sidebar {
+width: 280px;
+background-color: var(--dark-blue);
+color: var(--white);
+position: fixed;
+height: 100vh;
+overflow-y: auto;
+display: flex;
+flex-direction: column;
+box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+z-index: 100;
+}
+
+.sidebar-header {
+background-color: var(--odtu-red);
+padding: 30px 20px;
+text-align: center;
+}
+
+.sidebar-header h1 {
+margin: 0;
+font-size: 28px;
+letter-spacing: 1px;
+}
+
+.sidebar-header h2 {
+margin: 10px 0 0 0;
+font-size: 14px;
+font-weight: 400;
+opacity: 0.9;
+}
+
+.nav-links {
+list-style: none;
+padding: 0;
+margin: 20px 0;
+}
+
+.nav-links li a {
+display: block;
+padding: 15px 25px;
+color: #bdc3c7;
+text-decoration: none;
+font-size: 16px;
+font-weight: 500;
+border-left: 4px solid transparent;
+transition: all 0.3s ease;
+}
+
+.nav-links li a:hover, .nav-links li a.active {
+background-color: rgba(255,255,255,0.05);
+color: var(--white);
+border-left-color: var(--odtu-red);
+}
+
+/* Main Content Area */
+.main-content {
+margin-left: 280px;
+flex-grow: 1;
+padding: 0;
+background-color: var(--white);
+}
+
+/* Sections */
+.section {
+padding: 80px 60px;
+min-height: 100vh;
+border-bottom: 1px solid var(--bg-gray);
+display: flex;
+flex-direction: column;
+justify-content: center;
+}
+
+.section:nth-child(even) {
+background-color: var(--bg-light);
+}
+
+.section-title {
+font-size: 36px;
+color: var(--odtu-red);
+margin-top: 0;
+margin-bottom: 20px;
+padding-bottom: 15px;
+border-bottom: 3px solid var(--odtu-red);
+display: inline-block;
+}
+
+.lead-text {
+font-size: 20px;
+line-height: 1.6;
+color: var(--text-gray);
+margin-bottom: 40px;
+}
+
+p {
+font-size: 18px;
+line-height: 1.7;
+margin-bottom: 20px;
+}
+
+/* Grid Systems */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.grid-sectors { display: grid; grid-template-columns: 1fr 1.3fr; gap: 40px; }
+
+.card {
+background: var(--white);
+padding: 30px;
+border-radius: 10px;
+box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+border-top: 5px solid var(--odtu-red);
+}
+
+.card h3 {
+font-size: 22px;
+margin-top: 0;
+color: var(--dark-blue);
+}
+
+.hero-img-container {
+width: 100%;
+border-radius: 12px;
+overflow: hidden;
+box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+margin-bottom: 40px;
+background-color: #ddd;
+display: flex;
+align-items: center;
+justify-content: center;
+min-height: 400px;
+}
+.hero-img {
+width: 100%;
+display: block;
+height: auto;
+}
+
+/* Table specific */
+.data-table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 20px;
+font-size: 16px;
+background: white;
+box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.data-table th, .data-table td {
+padding: 15px 20px;
+text-align: left;
+border-bottom: 1px solid #ddd;
+}
+.data-table th {
+background-color: var(--dark-blue);
+color: white;
+}
+.data-table tr:hover { background-color: #f1f2f6; }
+.data-table tr.highlight {
+background-color: rgba(203, 32, 39, 0.05);
+font-weight: bold;
+color: var(--odtu-red);
+}
+
+/* Faculty Link Cards */
+.faculty-grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+gap: 20px;
+}
+
+.faculty-card {
+background: var(--white);
+border: 1px solid #ddd;
+border-radius: 8px;
+padding: 20px;
+text-align: center;
+cursor: pointer;
+transition: all 0.3s ease;
+text-decoration: none;
+color: inherit;
+display: block;
+}
+
+.faculty-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+border-color: var(--odtu-red);
+}
+
+.faculty-img {
+width: 100px;
+height: 100px;
+border-radius: 50%;
+margin: 0 auto 15px auto;
+overflow: hidden;
+border: 3px solid var(--dark-blue);
+box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+transition: 0.3s;
+}
+
+.faculty-card:hover .faculty-img {
+border-color: var(--odtu-red);
+}
+
+.faculty-card h3 {
+font-size: 17px;
+margin: 0 0 5px 0;
+color: var(--odtu-red);
+}
+
+.faculty-card p {
+font-size: 13px;
+color: var(--text-gray);
+margin: 0 0 15px 0;
+}
+
+.faculty-card .btn-link {
+display: inline-block;
+background-color: var(--bg-gray);
+padding: 8px 15px;
+border-radius: 20px;
+font-size: 13px;
+font-weight: bold;
+color: var(--dark-blue);
+transition: 0.3s;
+}
+
+.faculty-card:hover .btn-link {
+background-color: var(--odtu-red);
+color: white;
+}
+
+/* Modal for Faculty Details */
+.modal {
+display: none;
+position: fixed;
+z-index: 1000;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+background-color: rgba(0,0,0,0.6);
+backdrop-filter: blur(5px);
+}
+
+.modal-content {
+background-color: #fefefe;
+margin: 5% auto;
+padding: 0;
+border: 1px solid #888;
+width: 70%;
+max-width: 800px;
+border-radius: 12px;
+box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+animation: slideIn 0.4s ease-out;
+overflow: hidden;
+}
+
+@keyframes slideIn {
+from {transform: translateY(-50px); opacity: 0;}
+to {transform: translateY(0); opacity: 1;}
+}
+
+.modal-header {
+background-color: var(--dark-blue);
+color: white;
+padding: 20px 30px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.modal-header h2 { margin: 0; font-size: 24px;}
+.close-btn { color: white; font-size: 28px; font-weight: bold; cursor: pointer;}
+.close-btn:hover { color: var(--odtu-red); }
+
+.modal-body {
+padding: 30px;
+font-size: 16px;
+}
+
+.modal-body h4 {
+color: var(--odtu-red);
+margin-top: 0;
+border-bottom: 1px solid #eee;
+padding-bottom: 5px;
+}
+
+.modal-body ul {
+padding-left: 20px;
+margin-bottom: 25px;
+}
+
+.modal-body li { margin-bottom: 8px; }
+
+/* Accordion for FAQ */
+.accordion {
+background-color: var(--white);
+color: var(--dark-blue);
+cursor: pointer;
+padding: 20px;
+width: 100%;
+text-align: left;
+border: 1px solid #ddd;
+border-bottom: none;
+outline: none;
+font-size: 18px;
+font-weight: bold;
+transition: 0.4s;
+}
+.accordion:first-child { border-radius: 10px 10px 0 0; }
+.accordion:last-of-type { border-bottom: 1px solid #ddd; border-radius: 0 0 10px 10px; }
+.accordion.active, .accordion:hover { background-color: #f1f2f6; }
+.panel {
+padding: 0 20px;
+background-color: white;
+max-height: 0;
+overflow: hidden;
+transition: max-height 0.3s ease-out;
+border-left: 1px solid #ddd;
+border-right: 1px solid #ddd;
+}
+.panel-content { padding: 20px 0; }
+.panel.show-last { border-bottom: 1px solid #ddd; border-radius: 0 0 10px 10px;}
+
+</style>
+</head>
+<body>
+
+<div class="dashboard">
+<!-- Sidebar Navigation -->
+<nav class="sidebar">
+<div class="sidebar-header">
+<h1>ODTÜ</h1>
+<h2>Metalurji ve Malzeme Müh.</h2>
+</div>
+<ul class="nav-links">
+<li><a href="#giris" class="active">1. Karşılama</a></li>
+<li><a href="#nedir">2. Bölüm Hakkında</a></li>
+<li><a href="#istatistikler">3. YKS Başarısı</a></li>
+<li><a href="#ders-programi">4. Ders Programı</a></li>
+<li><a href="#kariyer">5. Kariyer ve İstihdam</a></li>
+<li><a href="#kadin-muhendisler">6. Eğitim & Profil</a></li>
+<li><a href="#akademik-kadro">7. Akademik Kadro & Araştırma</a></li>
+<li><a href="#sss">8. S.S.S.</a></li>
+</ul>
+</nav>
+
+<!-- Main Content -->
+<main class="main-content">
+
+<!-- 1. GİRİŞ -->
+<section id="giris" class="section">
+<div class="hero-img-container">
+<img src="https://scontent-fra5-2.xx.fbcdn.net/v/t39.30808-6/285683941_489197153211888_477186428264213980_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1365&ctp=s2048x1365&_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=0vhNiGtAt0IQ7kNvwEK-MaK&_nc_oc=AdoAUyDpDlplKeNh1QnYVPNRwBQvl-J2_AXzb0WBD1hKakCQ-rfJbm_exELtQkblKNUfGcErjK-G-A-yOSKgjY2y&_nc_zt=23&_nc_ht=scontent-fra5-2.xx&_nc_gid=gsTYK9kNxMlqkGqEPuHUSw&_nc_ss=7b2a8&oh=00_AQD5hd3fMWvvktzO57cc3REcyXj5WRkQJC6IaBJlwscIgw&oe=6A63E948" alt="ODTÜ METE Akademik ve İdari Kadrosu" class="hero-img" onerror="this.onerror=null; this.src='https://via.placeholder.com/1200x500/2c3e50/ffffff?text=ODTÜ+Metalurji+ve+Malzeme+Mühendisliği';">
+</div>
+<h1 style="font-size: 48px; color: var(--dark-blue); margin-bottom: 10px;">Geleceğin Malzemelerini Birlikte Tasarlayalım</h1>
+<p class="lead-text">1966'dan günümüze, Türkiye'nin lider Metalurji ve Malzeme Mühendisliği bölümü olarak, atomik düzeyden makroskobik boyutlara kadar teknolojinin temelini oluşturan mühendisler yetiştiriyoruz.</p>
+</section>
+
+<!-- 2. BÖLÜM HAKKINDA -->
+<section id="nedir" class="section">
+<h2 class="section-title">Neden ODTÜ METE?</h2>
+<p class="lead-text">Birçok teknoloji fikri, henüz uygun malzemeler geliştirilemediği için hayata geçirilememektedir. Yeni malzemelerin geliştirilmesi, tüm teknoloji ve üretim süreçleri için stratejik bir öneme sahiptir.</p>
+<div class="grid-2">
+<div class="card">
+<h3>Metalurji Mühendisliği</h3>
+<p>Metallerin doğadan (cevherlerden) veya kullanılmış ürünlerden elde edilmesi, işlenmesi ve zenginleştirilmesini kapsar. Havacılık, savunma ve elektronik sektörleri için kritik alaşımların geliştirilmesi bu alanın odak noktasıdır.</p>
+</div>
+<div class="card">
+<h3>Malzeme Mühendisliği</h3>
+<p>Metal, polimer, seramik ve kompozit gibi malzeme gruplarını nano ölçeklerden inceleyerek teknolojik uygulamalara uygun hale getirir. Bataryalar, biyomalzemeler ve yarı iletkenler burada doğar.</p>
+</div>
+</div>
+
+<h3 style="color:var(--dark-blue); margin-top:40px;">Tarihçe ve Misyon</h3>
+<p>1966'da ODTÜ Metalurji Mühendisliği Bölümü adıyla kurulan ve 1995'te ismi Metalurji ve Malzeme Mühendisliği Bölümü olarak değiştirilen bölümümüz, mezunları ve araştırma çalışmalarıyla ülkemize önemli katkılar yapmaktadır. 2016'da 50. hizmet yılına giren bölümümüzün lisans programının mezun sayısı 3.000'i, yüksek lisans ve doktora mezunlarının sayısı ise 700'ü aşmıştır.</p>
+<p>Bölümümüz, temel bilimlere ağırlıklı olarak yer veren bir mühendislik eğitimi vermekle birlikte, diğer disiplinlere çift ana dal ve yan dal imkânı sunmakta; AB-Erasmus programı ve ikili iş birlikleri çerçevesinde lisans ve yüksek lisans öğrencileri için değişim programları uygulamaktadır.</p>
+
+<div class="grid-3" style="margin-top:20px;">
+<div class="card" style="padding:20px; text-align:center;">
+<i class="fa-solid fa-award" style="font-size:32px; color:var(--odtu-red);"></i>
+<h4 style="margin:10px 0 5px 0;">ABET Akreditasyonu</h4>
+<p style="font-size:14px;">1996'dan beri sahip olduğu ABET Uluslararası Akreditasyon Sertifikası ile ABD'nin üst düzey üniversiteleriyle eşdeğer eğitim verdiğini ortaya koymuştur.</p>
+</div>
+<div class="card" style="padding:20px; text-align:center;">
+<i class="fa-solid fa-book-open" style="font-size:32px; color:var(--odtu-red);"></i>
+<h4 style="margin:10px 0 5px 0;">MATTER Dergisi</h4>
+<p style="font-size:14px;">Ülkemizdeki ilk ve dünyada az sayıda olan lisans öğrencilerinin bilimsel araştırmalarının yayınlandığı "MATTER" dergisi, bölümümüz tarafından Ocak 2014'ten beri yayınlanmaktadır (matter.mete.metu.edu.tr).</p>
+</div>
+<div class="card" style="padding:20px; text-align:center;">
+<i class="fa-solid fa-microscope" style="font-size:32px; color:var(--odtu-red);"></i>
+<h4 style="margin:10px 0 5px 0;">Araştırma Altyapısı</h4>
+<p style="font-size:14px;">X-ışını kırınımı cihazları, taramalı ve geçirimli elektron mikroskopları ile bilimsel araştırma gereksinimlerine en ileri düzeyde cevap verebilen geniş bir laboratuvar altyapısı.</p>
+</div>
+</div>
+
+<p style="margin-top:20px;">Malzeme eğitim ve araştırma laboratuvarlarımız standart cihazlardan pilot tesis düzeyine ulaşan geniş bir spektrum içinde yer alır: üretim metalurjisi, döküm, şekillendirme ve ısıl işlem, kaynak teknolojisi, tahribatsız muayene, içyapı ve mekanik özellikler, modelleme-simülasyon ve enformatik, toz metalurjisi, seramik ve cam, polimer ve polimer esaslı kompozitler, elektronik-manyetik-optik malzemeler, biyomalzemeler ve enerji malzemeleri gibi alanlarda lisans öğrencilerine ikinci yıldan itibaren araştırma projelerine katılma imkânı sunulmaktadır.</p>
+</section>
+
+<!-- 3. İSTATİSTİKLER -->
+<section id="istatistikler" class="section">
+<h2 class="section-title">YKS Başarısı & İstatistikler</h2>
+<p class="lead-text">ODTÜ Metalurji ve Malzeme Mühendisliği Bölümü, Türkiye’de alanında en yüksek başarı sıralamasıyla öğrenci kabul eden 1 Numaralı programdır. Her yıl 62 öğrenci bölüme kabul edilmektedir.</p>
+
+<div class="grid-3" style="margin-bottom:30px;">
+<div class="card" style="padding:15px; text-align:center;">
+<span style="font-size:15px; font-weight:bold; color:var(--dark-blue); display:block;">ANKARA</span>
+<span style="font-size:13px; color:#777;">Ana Kampüs</span>
+</div>
+<div class="card" style="padding:15px; text-align:center;">
+<span style="font-size:15px; font-weight:bold; color:var(--dark-blue); display:block;">KUZEY KIBRIS</span>
+<span style="font-size:13px; color:#777;">Northern Cyprus Kampüsü</span>
+</div>
+<div class="card" style="padding:15px; text-align:center;">
+<span style="font-size:15px; font-weight:bold; color:var(--dark-blue); display:block;">ERDEMLİ</span>
+<span style="font-size:13px; color:#777;">Erdemli Kampüsü</span>
+</div>
+</div>
+<p class="lead-text" style="font-size:16px; margin-bottom:30px;">2024 YKS sınavı sonucunda bölümümüze kayıt olanların SAY puanına göre sıralamadaki yerleri, kampüsler arasında <strong>1.814 ile 7.310</strong> arasında değişmektedir.</p>
+
+<div class="grid-2">
+<div>
+<h3 style="color: var(--dark-blue);">Sayısal Başarı Sırası Trendi</h3>
+<table class="data-table">
+<thead>
+<tr><th>Yıl</th><th>Kontenjan</th><th>Taban Puan</th><th>Başarı Sırası</th></tr>
+</thead>
+<tbody>
+<tr class="highlight"><td>2024</td><td>62</td><td>509.03</td><td>7.310</td></tr>
+<tr><td>2023</td><td>62</td><td>518.31</td><td>8.660</td></tr>
+<tr><td>2022</td><td>82</td><td>506.24</td><td>13.604</td></tr>
+<tr><td>2021</td><td>82</td><td>436.69</td><td>18.223</td></tr>
+<tr><td>2020</td><td>82</td><td>495.01</td><td>18.948</td></tr>
+</tbody>
+</table>
+<div class="card" style="margin-top:20px; padding:20px;">
+<canvas id="yksLineChart" height="220"></canvas>
+</div>
+</div>
+<div>
+<h3 style="color: var(--dark-blue);">2024 Yerleşen Net Ortalamaları</h3>
+<div class="grid-2" style="gap: 15px;">
+<div class="card" style="padding: 15px; text-align:center;">
+<span style="font-size:32px; font-weight:bold; color:var(--odtu-red); display:block;">37.3</span>
+<span style="font-size:14px; color:#555;">TYT Matematik (40S)</span>
+</div>
+<div class="card" style="padding: 15px; text-align:center;">
+<span style="font-size:32px; font-weight:bold; color:var(--odtu-red); display:block;">34.0</span>
+<span style="font-size:14px; color:#555;">AYT Matematik (40S)</span>
+</div>
+<div class="card" style="padding: 15px; text-align:center;">
+<span style="font-size:32px; font-weight:bold; color:var(--odtu-red); display:block;">34.2</span>
+<span style="font-size:14px; color:#555;">TYT Türkçe (40S)</span>
+</div>
+<div class="card" style="padding: 15px; text-align:center;">
+<span style="font-size:32px; font-weight:bold; color:var(--odtu-red); display:block;">18.4</span>
+<span style="font-size:14px; color:#555;">TYT Fen (20S)</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 4. DERS PROGRAMI -->
+<section id="ders-programi" class="section">
+<h2 class="section-title">Lisans Ders Programı (%100 İngilizce)</h2>
+<p class="lead-text" style="font-size:16px;">Sekiz dönemlik tam müfredat aşağıda listelenmiştir. Güncel müfredat ve ders içerikleri için
+<a href="https://mete.metu.edu.tr/undergraduate/undergraduate-curriculum" target="_blank" style="color:var(--odtu-red); font-weight:bold;">resmi lisans müfredatı sayfasını</a>
+ve <a href="https://mete.metu.edu.tr/system/files/Files/metu_metallurgical_and_materials_engineering_department_2021_catalogue.pdf" target="_blank" style="color:var(--odtu-red); font-weight:bold;">2021 Bölüm Kataloğu (PDF)</a> dosyasını inceleyebilirsiniz.
+</p>
+<div class="grid-4">
+<div class="card" style="padding:20px;">
+<h4 style="color:var(--odtu-red); margin-top:0;">1. Dönem</h4>
+<ul style="padding-left:15px; font-size:14px;">
+<li>MATH 119 Genel Matematik I</li>
+<li>PHYS 105 Genel Fizik I</li>
+<li>CHEM 111 Genel Kimya I</li>
+<li>ME 105 Teknik Resim</li>
+<li>ENG 101 Akademik İngilizce I</li>
+<li>IS 100 Bilgi Sistemleri Uygulamalarına Giriş</li>
+<li>OHS 101 İş Sağlığı ve Güvenliği I</li>
+</ul>
+</div>
+<div class="card" style="padding:20px;">
+<h4 style="color:var(--odtu-red); margin-top:0;">2. Dönem</h4>
+<ul style="padding-left:15px; font-size:14px;">
+<li>MATH 120 Genel Matematik II</li>
+<li>PHYS 106 Genel Fizik II</li>
+<li>CHEM 112 Genel Kimya II</li>
+<li>METE 102 Malzeme Mühendisliğine Giriş</li>
+<li>ENG 102 Akademik İngilizce II</li>
+</ul>
+</div>
+<div class="card" style="padding:20px;">
+<h4 style="color:var(--odtu-red); margin-top:0;">3. Dönem</h4>
+<ul style="padding-left:15px; font-size:14px;">
+<li>MATH 219 Türevsel Denklemler</li>
+<li>CENG 240 Mühendisler için Python ile Programlama</li>
+<li>ENG 211 Sözlü Sunum Teknikleri</li>
+<li>METE 201 Malzeme Bilimi I</li>
+<li>METE 203 Termodinamik I</li>
+<li>METE 215 Malzeme Üretim Süreçleri Laboratuvarı</li>
+<li>OHS 301 İş Sağlığı ve Güvenliği II</li>
+<li>HIST 2201 Atatürk İlke ve İnkılap Tarihi</li>
+</ul>
+</div>
+<div class="card" style="padding:20px;">
+<h4 style="color:var(--odtu-red); margin-top:0;">4. Dönem</h4>
+<ul style="padding-left:15px; font-size:14px;">
+<li>METE 202 Malzeme Bilimi II</li>
+<li>ES 223 Statik ve Mukavemet</li>
+<li>METE 204 Termodinamik II</li>
+<li>METE 206 Malzeme Laboratuvarı</li>
+<li>ES 361 Mühendislik için Hesaplama Metotları</li>
+<li>Kısıtlı Seçmeli Ders*</li>
+<li>HIST 2202 Atatürk İlke ve İnkılap Tarihi II</li>
+</ul>
+</div>
+<div class="card" style="padding:20px;">
+<h4 style="color:var(--odtu-red); margin-top:0;">5. Dönem</h4>
+<ul style="padding-left:15px; font-size:14px;">
+<li>METE 301 Faz Diyagramları</li>
+<li>METE 303 Malzemelerin Mekanik Davranışı</li>
+<li>METE 305 Taşınım Olayları</li>
+<li>METE 307 Metalografi</li>
+<li>METE 349 Malzemelerin Elektronik, Manyetik ve Optik Özellikleri</li>
+<li>TURK 303 Türkçe I</li>
+<li>METE 300 Yaz Stajı I</li>
+</ul>
+</div>
+<div class="card" style="padding:20px;">
+<h4 style="color:var(--odtu-red); margin-top:0;">6. Dönem</h4>
+<ul style="padding-left:15px; font-size:14px;">
+<li>METE 302 Katılaştırma Prensipleri</li>
+<li>METE 306 Temel Malzeme Üretim Süreçlerinin Kimyasal Prensipleri</li>
+<li>METE 308 Malzemelerin Fiziksel Temelleri</li>
+<li>METE 310 Malzemelerin Yapısı ve Karakterizasyonu</li>
+<li>METE 350 Malzemelerin Çok Ölçekli Modelleme ve Simülasyonları</li>
+<li>TURK 304 Türkçe II</li>
+</ul>
+</div>
+<div class="card" style="padding:20px;">
+<h4 style="color:var(--odtu-red); margin-top:0;">7. Dönem</h4>
+<ul style="padding-left:15px; font-size:14px;">
+<li>METE 401 Tasarım I</li>
+<li>METE 451 Seramik Malzemeler</li>
+<li>METE 453 Polimer Malzemeler</li>
+<li>Teknik Seçmeli Ders x2</li>
+<li>Teknik Olmayan Seçmeli Ders</li>
+<li>METE 400 Yaz Stajı II</li>
+</ul>
+</div>
+<div class="card" style="padding:20px;">
+<h4 style="color:var(--odtu-red); margin-top:0;">8. Dönem</h4>
+<ul style="padding-left:15px; font-size:14px;">
+<li>METE 402 Tasarım II</li>
+<li>Teknik Seçmeli Ders x2</li>
+<li>Teknik Olmayan Seçmeli Ders x2</li>
+<li>Serbest Seçmeli Ders</li>
+</ul>
+</div>
+</div>
+<p style="font-size:13px; color:#777; margin-top:10px;">* Kısıtlı seçmeli ders: PHYS 207 (Modern Fizik), CHEM 282 (Organik Kimyanın Temelleri) veya BIO 255 (Hücre Biyolojisi) derslerinden biri seçilir.</p>
+
+<button class="accordion" style="margin-top:20px;">Teknik Seçmeli Dersler — Tümünü Gör (28 Ders)</button>
+<div class="panel">
+<div class="panel-content">
+<div class="grid-2">
+<ul style="font-size:14px; padding-left:20px;">
+<li>METE 414 Çelikler ve Çelik Üretim Teknolojileri</li>
+<li>METE 416 Yakıtlar ve Fırınlar</li>
+<li>METE 417 Metalurjide Bilgisayar Uygulamaları</li>
+<li>METE 421 Cam Bilimi ve Teknolojisi</li>
+<li>METE 422 Yapısal Seramikler ve Seramik Kompozitler</li>
+<li>METE 433 Organik Elektronik Malzemeleri</li>
+<li>METE 434 Seramik Proseslerin Prensipleri</li>
+<li>METE 435 Döküm Laboratuvarı I</li>
+<li>METE 436 Döküm Laboratuvarı II</li>
+<li>METE 440 Metalurji Endüstrisinde Toplam Kalite Yönetimi</li>
+<li>METE 441 Ergitme ve Döküm</li>
+<li>METE 442 Enerji Depolama Cihazları</li>
+<li>METE 443 Malzeme Bilimi ve Mühendisliğinde Bilgisayar Modelleme ve Simülasyon</li>
+<li>METE 444 Elektronik ve Manyetik Seramikler</li>
+</ul>
+<ul style="font-size:14px; padding-left:20px;">
+<li>METE 456 Malzemelerin Yüzey İşlemleri</li>
+<li>METE 460 Polimerlerle Mühendislik</li>
+<li>METE 462 Malzeme İşlemlerinde Kalıntı Gerilmeler</li>
+<li>METE 464 Metallerin Isıl İşlemi</li>
+<li>METE 466 Toz Metalurjisi</li>
+<li>METE 468 Kaynak Metalurjisi</li>
+<li>METE 470 Kompozit Malzemeler</li>
+<li>METE 472 Metallerin Korozyonu ve Oksitlenmesi</li>
+<li>METE 474 Hasar Analizi</li>
+<li>METE 477 Mühendislik Malzemelerinin Deneyleri ve Değerlendirilmesi</li>
+<li>METE 478 Malzemelerin Tahribatsız Muayenesi</li>
+<li>METE 480 Malzeme Biliminde Elektron Mikroskobu</li>
+<li>METE 481 Metalurji Mühendisliğinde Özel Konular</li>
+<li>METE 487 İnce Film Malzemeleri ve Uygulamaları</li>
+<li>METE 497 Malzeme Biliminde Özel Konular: Malzeme Enformatiğine Giriş</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 5. KARİYER -->
+<section id="kariyer" class="section">
+<h2 class="section-title">İstihdam ve Kariyer</h2>
+<p class="lead-text" style="color: var(--odtu-red); font-weight: bold;">Mezunlarımızın %95'inden fazlası ilk 1 yıl içinde istihdam ediliyor!</p>
+<div class="grid-sectors">
+<div>
+<p>Çoğu öğrencimiz henüz lisans eğitiminin son yılında iş teklifleri almaktadır. Mezunlarımız, Türkiye’nin en büyük 500 sanayi kuruluşundan en az 200’ünde aktif olarak görev almaktadır.</p>
+<p>Mezunlarımızın 3000'i aşkın dev iletişim ağı sayesinde ulusal ve uluslararası firmalarda kariyer basamaklarını hızla tırmanabilirsiniz.</p>
+<p>Sanayi sektörlerinin tamamı malzeme ile doğrudan veya dolaylı bağlantılıdır. Mezunlarımız yurt içi ve dışındaki önemli firmalarda, araştırma merkezlerinde, üniversitelerde ve firmaların AR-GE birimlerinde seçkin elemanlar olarak çalışmakta veya kendi kurdukları firmalarda faaliyet göstermektedir. Yenilikçi ürün geliştirme ihtiyacı, mezunlarımıza tasarım, simülasyon, araştırma ve geliştirme alanlarında yeni iş olanakları sunmaktadır.</p>
+<p>Mezunlar bir taraftan demir-çelik, seramik, cam gibi entegre tesislerde üretim bazında görev alırken; diğer taraftan savunma, petrokimya, enerji, havacılık ve otomotiv gibi sektörlerde daha çok kalite kontrol, tasarım ve Ar-Ge alanlarında görev yapmaktadır. Ayrıca önemli sayıda girişimci mezunumuz, ileri malzemeler, döküm, ısıl işlem, toz metalurjisi, yüzey kaplamalar ve kompozit üretimi konularında kendi işletmelerini yönetmektedir.</p>
+</div>
+<div class="card">
+<h3 style="margin-bottom: 15px;">Çalışılan Sektörler ve Örnek Firmalar</h3>
+<ul style="font-size: 16px; line-height:1.7; padding-left:20px; color: var(--text-dark);">
+<li><strong>Savunma Sanayii:</strong> TUSAŞ, ASELSAN, ROKETSAN, TEI, FNSS, HAVELSAN, Otokar Savunma</li>
+<li><strong>Havacılık ve Uzay:</strong> TUSAŞ, TEI, THY Teknik, Boeing, Airbus, Lockhead Martin (Yurtdışı)</li>
+<li><strong>Otomotiv Sanayii:</strong> Ford Otosan, MAN, Türk Traktör, Tofaş, Renault, Toyota</li>
+<li><strong>Demir-Çelik ve Döküm:</strong> Erdemir, İsdemir, Asil Çelik, Borçelik, KARDEMİR, Çolakoğlu Metalurji</li>
+<li><strong>Biyomedikal ve Sağlık Teknolojileri:</strong> İmplant ve Protez Üreticileri, Biyomalzeme Tasarım/Ar-Ge Merkezleri, Tıbbi Cihaz Kalite Kontrolü</li>
+<li><strong>Yarı İletkenler ve Elektronik:</strong> Aselsan Mikroelektronik (AB-Mikro), Beko, Vestel, Arçelik, Yonga Teknoloji</li>
+<li><strong>Polimer, Plastik & Cam:</strong> Lassa, Kordsa, Petlas, Şişecam, Brisa, Pilsan</li>
+<li><strong>Enerji & İleri Teknolojiler:</strong> BOTAŞ, Batarya Ar-Ge (ASPİLSAN), Nanoteknoloji Araştırma Merkezleri (SUNUM, UNAM), Temiz Enerji Sistemleri</li>
+</ul>
+</div>
+</div>
+
+<div class="grid-2" style="margin-top:30px;">
+<div class="card" style="padding:20px;">
+<h3 style="color:var(--dark-blue); margin-top:0;">Son 10 Yılda Ortalama Yıllık Mezun Sayısı</h3>
+<canvas id="mezunBarChart" height="220"></canvas>
+</div>
+<div class="card" style="padding:20px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+<i class="fa-solid fa-file-lines" style="font-size:36px; color:var(--odtu-red); margin-bottom:10px;"></i>
+<h3 style="margin:0;">Yayın Performansı</h3>
+<p style="font-size:15px;">Bölümümüz yüksek yayın ve araştırma performansına sahiptir. Son 5 yılda bölümümüzde toplam <strong style="color:var(--odtu-red);">157</strong> yayın yapılmış ve <strong style="color:var(--odtu-red);">54</strong> araştırma projesi yürütülmüştür.</p>
+</div>
+</div>
+</section>
+
+<!-- 6. EĞİTİM VE PROFİL -->
+<section id="kadin-muhendisler" class="section">
+<h2 class="section-title">Eğitim Olanakları ve Kapsayıcılık</h2>
+<div class="grid-3">
+<div class="card">
+<h3 style="color:var(--odtu-red);">Kadın Mühendisler</h3>
+<p style="font-size: 15px;">Öğrencilerimizin <strong>%30'u</strong> kadındır. "Mühendislik erkek işidir" önyargısını reddediyor, sadece zekanın ve mühendislik yaklaşımının ön planda olduğu liyakate dayalı bir ekosistem sunuyoruz.</p>
+</div>
+<div class="card">
+<h3 style="color:var(--odtu-red);">Çift Anadal (ÇAP)</h3>
+<p style="font-size: 15px;">Havacılık, Makine, Endüstri, Kimya Mühendisliği veya Fizik bölümleriyle Çift Anadal veya Yandal yapma imkanı sunuyoruz (Ortalama 25-30 aktif öğrencimiz bulunmaktadır).</p>
+</div>
+<div class="card">
+<h3 style="color:var(--odtu-red);">Uluslararası Deneyim</h3>
+<p style="font-size: 15px;">Erasmus değişim programlarıyla Avrupa'nın prestijli üniversitelerinde eğitim alma fırsatı ve <strong>%100 İngilizce eğitim</strong> ile global dünyaya anında entegrasyon.</p>
+</div>
+</div>
+</section>
+
+<!-- 7. AKADEMİK KADRO (İNTERAKTİF) -->
+<section id="akademik-kadro" class="section">
+<h2 class="section-title">Akademik Kadro ve Araştırma Alanları</h2>
+<p class="lead-text">Bölümümüz, alanında lider ve uluslararası deneyime sahip güçlü bir akademik kadroya sahiptir.<br><strong style="color:var(--odtu-red); font-size:16px;">Hocalarımızın detaylı çalışma alanlarını, laboratuvar bilgilerini ve öne çıkan yayınlarını görmek için kartlara tıklayınız.</strong></p>
+
+<div class="grid-2" style="margin-bottom:40px;">
+<div>
+<h3 style="color:var(--dark-blue);">Öğretim Elemanları Dağılımı</h3>
+<table class="data-table">
+<thead>
+<tr><th>Unvan</th><th>Kişi Sayısı</th></tr>
+</thead>
+<tbody>
+<tr><td>Profesör</td><td>11</td></tr>
+<tr><td>Doçent</td><td>2</td></tr>
+<tr><td>Doktor Öğretim Üyesi</td><td>6</td></tr>
+<tr><td>Öğretim Görevlisi</td><td>2</td></tr>
+<tr><td>Araştırma Görevlisi</td><td>20</td></tr>
+<tr class="highlight"><td>Toplam</td><td>41</td></tr>
+</tbody>
+</table>
+</div>
+<div class="grid-2" style="gap:20px;">
+<div class="card" style="padding:20px;">
+<canvas id="facultyPieChart" height="200"></canvas>
+</div>
+<div class="card" style="padding:20px;">
+<canvas id="facultyBarChart" height="200"></canvas>
+</div>
+</div>
+</div>
+
+<div class="faculty-grid" id="facultyGrid">
+<!-- JavaScript ile dinamik oluşturulacak -->
+</div>
+</section>
+
+<!-- 8. SSS -->
+<section id="sss" class="section">
+<h2 class="section-title">Sıkça Sorulan Sorular</h2>
+<p class="lead-text" style="font-size:15px;">Aşağıdaki sorular, bölümün resmi SSS sayfasından ve alan hakkında genel kaynaklardan derlenmiştir.</p>
+
+<button class="accordion">Neden Metalurji ve Malzeme Mühendisliği?</button>
+<div class="panel"><div class="panel-content"><p>Yeni bir teknoloji fikri, genellikle o teknolojiye uygun malzeme geliştirilmeden hayata geçirilemez. Keşfetmeyi sevenler için sürekli kendini yenileyen bir dünyadır. Geniş istihdam ağı sayesinde sınır tanımaksızın her endüstride çalışabilirsiniz.</p></div></div>
+
+<button class="accordion">Metalurji Mühendisliği ile Malzeme Mühendisliği arasındaki fark nedir?</button>
+<div class="panel"><div class="panel-content"><p>Metalurji Mühendisliği, metallerin cevherden elde edilmesi, işlenmesi ve zenginleştirilmesiyle ilgilenir. Malzeme Mühendisliği ise metal, seramik, polimer ve kompozit gibi çeşitli malzeme gruplarını atomik ölçekten makroskobik boyutlara kadar inceleyerek teknolojik uygulamalara uygun hale getirir. Bölüm, bu iki alanın disiplinlerarası bir birleşimidir; doğal ya da sentetik hammaddelerden yola çıkarak malzemelerin tasarımı, üretimi ve karakterizasyonuyla ilgilenir.</p></div></div>
+
+<button class="accordion">Dersler hep İngilizce mi? Zorluk çeker miyim?</button>
+<div class="panel"><div class="panel-content"><p>Eğitim %100 İngilizcedir. ODTÜ Yabancı Diller Yüksekokulu, dili yeterli olmayan öğrencilere 1 yıllık yoğun hazırlık eğitimi vererek onları bu sürece kusursuz hazırlar. Lisans boyunca akademik yazma ve sözlü sunum dersleriyle dil yetkinliği desteklenir. Bu durum uluslararası alanda iş bulmanızı ve yurt dışında yüksek lisans/doktora yapmanızı kolaylaştırır.</p></div></div>
+
+<button class="accordion">Ağır sanayi (Döküm, Demir-Çelik vb.) zorlu mudur?</button>
+<div class="panel"><div class="panel-content"><p>Günümüz endüstrisinde süreçler otomasyon, makine öğrenmesi ve kontrol sistemleriyle yönetilir. Bir mühendis üretim bandında fiziksel kas gücüyle değil; proses tasarımı, Ar-Ge ve optimizasyon alanlarında beyniyle çalışır.</p></div></div>
+
+<button class="accordion">Metalurji ve Malzeme Mühendisleri hangi sektörlerde çalışır?</button>
+<div class="panel"><div class="panel-content"><p>Mezunlar; demir-çelik ve döküm, seramik-cam, polimer, elektronik, otomotiv, savunma sanayii ve enerji sektörlerinde görev almaktadır. ODTÜ METE mezunları, Türkiye'nin en büyük 500 sanayi kuruluşundan en az 200'ünde çalışmaktadır. Kamu sektöründe de savunma sanayii, enerji ve altyapı projelerinde, ayrıca devlet üniversitelerinde akademisyen olarak istihdam imkânı bulunmaktadır.</p></div></div>
+
+<button class="accordion">Mezuniyet sonrası iş bulma durumu nasıldır?</button>
+<div class="panel"><div class="panel-content"><p>Mezunların yaklaşık %95'i mezuniyeti izleyen ilk yıl içinde istihdam edilmektedir. Mezunlar hem Türkiye'deki öncü sanayi kuruluşlarında hem de dünya çapındaki çok uluslu firmalarda farklı kademelerde, bazen üst düzey yönetim pozisyonlarında görev almaktadır.</p></div></div>
+
+<button class="accordion">Kadınlar için çalışma ve eğitim şartları nasıldır?</button>
+<div class="panel"><div class="panel-content"><p>2024 itibarıyla bölümdeki yaklaşık 446 öğrenciden 135'i (yaklaşık %30) kadındır. "Mühendislik erkek işidir" düşüncesi bir önyargıdır; bölüm, sadece zekânın ve mühendislik yaklaşımının ön planda olduğu liyakate dayalı bir ortam sunar.</p></div></div>
+
+<button class="accordion">Erasmus gibi değişim programlarına katılım mümkün mü?</button>
+<div class="panel"><div class="panel-content"><p>Evet. Her yıl yaklaşık 3-4 öğrenci, anlaşmalı yurt dışı üniversitelere giderek bir dönem boyunca eğitimlerine orada devam etmektedir.</p></div></div>
+
+<button class="accordion">Yandal veya çift anadal yapmak mümkün mü?</button>
+<div class="panel"><div class="panel-content"><p>Gerekli şartlar sağlandığında mümkündür. Öğrenciler; Havacılık ve Uzay, Makine, Endüstri, İnşaat, Kimya Mühendisliği ve Fizik bölümleriyle yandal (ortalama 15-20 öğrenci) veya çift anadal (ortalama 5-10 öğrenci) programlarına katılabilmektedir.</p></div></div>
+
+<button class="accordion">Mezunlar akademik kariyere devam edebilir mi?</button>
+<div class="panel"><div class="panel-content"><p>Evet. Bölüm öğretim üyelerinin büyük kısmı yurt dışında akademik deneyim kazanmıştır ve lisansüstü öğrenciler dünyanın önde gelen üniversitelerinde doktora ve doktora sonrası araştırma burslarına hak kazanabilmektedir. Mezunlar, araştırma görevlisi veya öğretim üyesi olarak akademik kariyere devam edebilir; ilerleyen yıllarda yönetici pozisyonlarına veya danışmanlık rollerine geçebilirler.</p></div></div>
+
+<button class="accordion">Metalurji ve Malzeme Mühendisleri ne kadar maaş kazanır?</button>
+<div class="panel"><div class="panel-content"><p>Maaşlar; çalışılan sektöre, uzmanlık alanına ve deneyim seviyesine göre değişmektedir. Genel piyasa verilerine göre metalurji mühendisi maaşları geniş bir aralıkta seyretmekte; nanoteknoloji ve ileri malzemeler gibi alanlarda uzmanlaşan mühendisler daha yüksek ücretlerle iş bulabilmektedir. Kamu sektöründe maaşlar özel sektöre kıyasla daha stabildir.</p></div></div>
+</section>
+</main>
+</div>
+
+<!-- Hoca Detay Modalı -->
+<div id="facultyModal" class="modal">
+<div class="modal-content">
+<div class="modal-header">
+<h2 id="modalName">Hoca Adı</h2>
+<span class="close-btn" onclick="closeModal()">×</span>
+</div>
+<div class="modal-body">
+<h4>Araştırma Alanları</h4>
+<ul id="modalResearch"></ul>
+<h4>Laboratuvar & Akademik Bilgiler</h4>
+<ul id="modalDetails"></ul>
+<div id="modalPublicationsContainer" style="display: none;">
+<h4>Öne Çıkan Yayınlar (Son 5 Yıl)</h4>
+<ul id="modalPublications" style="font-size: 14.5px; line-height: 1.5; color: var(--text-gray);"></ul>
+</div>
+<div style="text-align: right; margin-top: 20px;">
+<a id="modalLink" href="https://mete.metu.edu.tr/people/current-faculty" target="_blank" style="background-color:var(--odtu-red); color:white; padding:10px 20px; text-decoration:none; border-radius:5px; font-weight:bold;">Tüm Akademik Kadro Sayfası</a>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+// KODUN ÇÖKMESİNİ ÖNLEMEK İÇİN MODÜLER YAPI:
+// Her bileşen birbirinden bağımsız try/catch blokları ile çalışır.
+document.addEventListener("DOMContentLoaded", function() {
+
+// 1. SSS - Akordeon Menülerin Yüklenmesi
+try {
+var acc = document.getElementsByClassName("accordion");
+for (let i = 0; i < acc.length; i++) {
+acc[i].addEventListener("click", function() {
+this.classList.toggle("active");
+var panel = this.nextElementSibling;
+if (panel.style.maxHeight) {
+panel.style.maxHeight = null;
+panel.classList.remove("show-last");
+} else {
+panel.style.maxHeight = panel.scrollHeight + "px";
+if(this === acc[acc.length-1]) panel.classList.add("show-last");
+}
+});
+}
+} catch (e) {
+console.error("Akordeon menü yüklenemedi:", e);
+}
+
+// 2. Hocalar - Dinamik İçeriğin Yüklenmesi
+try {
+const facultyData = [
+{
+name: "Prof. Dr. Kadri Aydınol", title: "Bölüm Başkanı",
+image: "https://mete.metu.edu.tr/sites/mete.metu.edu.tr/files/kadri_aydinol.jpg",
+research: ["Enerji Depolama Malzemeleri", "Enerji Depolama Cihazları Tasarımı"],
+details: ["Doktora: 1994, ODTÜ", "Doktora Sonrası: 1998, MIT", "Laboratuvar: Batarya ve Enerji Depolama Cihazları Laboratuvarı"],
+publications: [
+"Morphology effect on electrochemical properties of doped (W and Mo) 622NMC, 111NMC, and 226NMC cathode materials (2020)",
+"Development of activated carbon/bimetallic transition metal phosphide composite materials for electrochemical capacitors and oxygen evolution reaction catalysis (2022)",
+"Size and morphology controlled polyol synthesis of LiFePO4 nanoparticles with addition of organic acid combinations (2024)"
+ ]
+},
+{
+name: "Doç. Dr. Simge Çınar Aygün", title: "Bölüm Başkan Yardımcısı",
+image: "https://mete.metu.edu.tr/sites/mete.metu.edu.tr/files/simge_cinar.jpg",
+research: ["Sıvı Akış Bataryaları", "Reoloji", "Kolloid ve Yüzey Bilimi", "Mikro/Nano Malzeme Sentezi", "Seramiklerin Eklemeli İmalatı"],
+details: ["Doktora: 2013, Iowa State University, ABD", "Laboratuvar: Kolloid Laboratuvarı"],
+publications: [
+"Development of High-Performance Ablative Composites: Synergistic Effects of Alumina Particles and Silica Fabric in the Polybenzoxazine Matrix (2025)",
+"Waterbased electrically conductive adhesive for PERC-type shingled solar cells (2025)",
+"Bismuth-Tin Core–Shell Particles From Liquid Metals: A Novel, Highly Efficient Photothermal Material that Combines Broadband Light Absorption with Effective Light-to-Heat Conversion (2024)"
+ ]
+},
+{
+name: "Dr. Öğr. Üy. Yusuf Keleştemur", title: "Bölüm Başkan Yardımcısı",
+image: "https://mete.metu.edu.tr/sites/mete.metu.edu.tr/files/yusuf_kelestemur.jpg",
+research: ["Kolloidal Yarıiletken Nanokristaller", "Yarıiletken Nanokristallerin Sentezi", "Optoelektronik Uygulamalar"],
+details: ["Doktora: 2017, Bilkent Üniversitesi", "Doktora Sonrası: ETH Zürich", "Laboratuvar: Fonksiyonel Nanomalzemeler Laboratuvarı"],
+publications: [
+"Zinc Chalcogenide Based Shell Layers for Colloidal Quantum Wells (2025)",
+"Direct synthesis of zinc-blende ZnSe nanoplatelets (2024)",
+"Tattoo-like multi-color physically unclonable functions (2024)"
+ ]
+},
+{
+name: "Prof. Dr. Abdullah Öztürk", title: "Öğretim Üyesi",
+image: "https://mete.metu.edu.tr/sites/mete.metu.edu.tr/files/abdullah_ozturk.jpg",
+research: ["Seramik Malzemeler", "Yapısal Seramikler", "Cam ve Cam Seramikler", "Fotokatalitik Malzemeler"],
+details: ["Doktora: 1991, University of Missouri-Rolla, ABD", "Laboratuvar: Cam Bilimi ve Fotokatalitik Malzemeler Lab."],
+publications: [
+"Production and biological properties of nano porous glass microparticles for anticancer drug carrier (2024)",
+"Effects of fluorination and thermal shock on the photocatalytic activity of Bi2O3 nanopowders (2021)",
+"In vitro evaluation of tooth-colored yttria stabilized zirconia ceramics (2021)"
+ ]
+},
+{
+name: "Prof. Dr. Arcan F. Dericioğlu", title: "Öğretim Üyesi",
+image: "https://mete.metu.edu.tr/sites/mete.metu.edu.tr/files/arcan_dericioglu.jpg",
+research: ["Elektromanyetik Dalgalarla Madde Etkileşimi", "Alaşımların Eklemeli İmalatı"],
+details: ["Doktora: 2002, The University of Tokyo, Japonya", "Laboratuvar: Electromagnetic Materials Laboratory"],
+publications: [
+"Effect of CNT impregnation on the mechanical and thermal properties of C/C-SiC composites (2020)",
+"Selective laser melting of Nano-TiN reinforced 17-4 PH stainless steel: Densification, microstructure and mechanical properties (2022)",
+"Influence of the heat treatment on the microstructure, mechanical and high-temperature oxidation behavior of Hastelloy X alloy fabricated via laser powder bed fusion (2025)"
+ ]
+},
+{
+name: "Doç. Dr. Batur Ercan", title: "Öğretim Üyesi",
+image: "https://mete.metu.edu.tr/sites/mete.metu.edu.tr/files/batur_ercan.jpg",
+research: ["Anodizasyon", "Yüzey Modifikasyonları", "Biyomalzemeler", "Doku Mühendisliği"],
+details: ["Doktora: 2011, Brown Üniversitesi", "Doktora Sonrası: Harvard Tıp & Northeastern", "Laboratuvar: Biyomalzeme ve Nanotıp Laboratuvarı"],
+publications: [
+"Synthesis of calcium carbonate microspheres via inert gas bubbling for orthopedic applications (2020)",
+"Mineral-doped poly(L-lactide) acid scaffolds enriched with exosomes improve osteogenic commitment of human adipose-derived mesenchymal stem cells (2020)",
+"Magnetic and luminescence properties of bioactive glass nanoparticles for biomedical applications (2025)"
+ ]
+},
+{
+name: "Doç. Dr. Bilge İmer", title: "Öğretim Üyesi",
+image: "https://mete.metu.edu.tr/sites/mete.metu.edu.tr/files/bilge_imer.jpg",
+research: ["MOCVD ile Nitrürlü Malzemeler", "CVD/PVD ile Yarıiletken Optoelektronik", "Optik ve Yapısal İnce Film Kaplamalar"],
+details: ["Doktora: 2006, UCSB, ABD", "Laboratuvar: İnce Film, Optoelektronik ve Kuantum Malzemeler Lab."],
+publications: []
+},
+{
+name: "Prof. Dr. Bilgehan Ögel", title: "Öğretim Üyesi",
+image: "https://mete.metu.edu.tr/sites/mete.metu.edu.tr/files/bilgehan_ogel.jpg",
+research: ["Mikroyapı-Özellik İlişkisi", "Hasar Analizi", "Metallerin Isıl İşlemi", "Toz Metalurjisi"],
+details: ["Doktora: 1990, ODTÜ", "Laboratuvar: Bainite Research Laboratory"],
+publications: []
+},
+{
+name: "Prof. Dr. C. Hakan Gür", title: "Öğretim Üyesi",
+image: "https://mete.metu.edu.tr/sites/mete.metu.edu.tr/files/hakan_gur.jpg",
+research: ["Isıl İşlem", "Mekanik Metalurji", "Kalıntı Gerilme", "Tahribatsız Muayene"],
+details: ["Doktora: 1995, ODTÜ", "Doktora Sonrası: BAM-Berlin", "Laboratuvar: NDT and Welding Research Center"],
+publications: [
+"A Sustainable Strategy for Wire Arc Additive Manufacturing of High-Performance Duplex Stainless Steel: Microstructural Refinement and Mechanical Anisotropy Reduction (2025)",
+"Investigation of Travel Speed Effects on Microstructure and Corrosion Behavior of Duplex Stainless Steel in Wire-Based DED Additive Manufacturing (2025)",
+"Non-Destructive Determination of Surface Residual Stresses in Electron Beam Welded AISI 410 Martensitic Stainless Steel Using the Magnetic Barkhausen Noise Technique (2025)"
+ ]
+},
+{
+name: "Prof. Dr. Caner Durucan", title: "Öğretim Üyesi",
+image: "https://mete.metu.edu.tr/sites/mete.metu.edu.tr/files/caner_durucan.jpg",
+research: ["Seramik ve Cam Malzemeler", "Biyoseramikler"],
+details: ["Doktora: 2003, Pennsylvania State University, ABD", "Laboratuvar: Bioceramics and Materials Chemistry Laboratory"],
+publications: [
+"Functionalization of glass fiber woven fabrics by indium tin oxide (ITO) coatings for electromagnetic wave absorption (2023)",
+"Decellularized adipose tissue matrix-coated and simvastatin-loaded hydroxyapatite microspheres for bone regeneration (2022)",
+"Complete chemical and structural characterization of selenium-incorporated hydroxyapatite (2022)"
+ ]
+},
+{
+name: "Prof. Dr. Cevdet Kaynak", title: "Öğretim Üyesi",
+image: "https://mete.metu.edu.tr/sites/mete.metu.edu.tr/files/cevdet_kaynak.jpg",
+research: ["Polimerler", "Makro, Mikro ve Nano-Kompozitler"],
+details: ["Doktora: 1994, Imperial College, İngiltere", "Laboratuvar: Polimerler ve Kompozitler Laboratuvarı"],
+publications: [
+"Obtaining Cellulose Nanocrystals by Acid Hydrolysis Procedure; and Their Use as Reinforcement in Polylactide Biocomposites (2025)",
+"Contribution of Cellulose Nanofibrils on the Strengthening and Toughening of Neat and Blended Polylactide Specimens; and the Differences After 3D-Printing (2024)",
+"Parameters Influencing Electrospun Nanofiber Diameter of Polylactide Incorporated with Cellulose Nanofibrils and Nanocrystals (2024)"
+ ]
+},
+{
+name: "Doç. Dr. Çiğdem Toparlı", title: "Öğretim Üyesi",
+image: "https://mete.metu.edu.tr/sites/mete.metu.edu.tr/files/cigdem_toparli.jpg",
+research: ["Elektrokimya", "Elektrokataliz", "Enerji Dönüşümü ve Depolama", "Korozyon"],
+details: ["Doktora: 2017, Max-Planck-Institut, Almanya", "Doktora Sonrası: MIT", "Laboratuvar: Laboratory for Electrochemical Energy Materials"],
+publications: [
+"Optimizing cation synergy in high entropy oxides for superior bifunctional oxygen electrocatalysis (2025)",
+"Mitigating Hydrogen Ingress with Thin Cloaking Liquid Barrier Films (2025)",
+"Earth-Abundant Divalent Cation High-Entropy Spinel Ferrites as Bifunctional Electrocatalysts for Oxygen Evolution and Reduction Reactions (2024)"
+ ]
+},
+{
+name: "Prof. Dr. H. Emrah Ünalan", title: "Öğretim Üyesi",
+image: "https://mete.metu.edu.tr/sites/mete.metu.edu.tr/files/emrah_unalan.jpg",
+research: ["Nanomalzemeler", "Elektronik Cihazlar"],
+details: ["Doktora: 2006, Rutgers Üniversitesi, ABD", "Doktora Sonrası: Cambridge Üniversitesi", "Laboratuvar: Nanomalzemeler ve Elektronik Cihazlar Laboratuvarı"],
+publications: [
+"Two-Dimensional Titanium Disulfide Nanosheets for Enhanced Capacity of Zinc-Ion Capacitors (2025)",
+"Surface Engineering of MXene and Functional Fullerenols for Cancer Biomarker 'eIF3d' (2025)",
+"Triboelectric nanogenerators from fundamentals to applications (2025)"
+ ]
+},
+{
+name: "Dr. Öğr. Üy. Irmak Sargın", title: "Öğretim Üyesi",
+image: "https://mete.metu.edu.tr/sites/mete.metu.edu.tr/files/irmak_sargin.jpg",
+research: ["Malzeme Enformatiği", "Akıllı Malzemeler", "Zırh Malzemeleri", "Kritik Malzemeler"],
+details: ["Doktora: Iowa Eyalet Üniversitesi", "Doktora Sonrası: MIT", "Laboratuvar: Materials Informatics Solutions (MISLab)"],
+publications: [
+"Putting error bars on density functional theory (2024)",
+"Mapping of composition-rheology relationships in polymer composite-type precursors (2024)",
+"Multivariate analysis: An essential for studying complex glasses (2022)"
+ ]
+},
+{
+name: "Dr. Öğr. Üy. İrem Nur Gamze Özbilgin", title: "Öğretim Üyesi",
+image: "https://mete.metu.edu.tr/sites/mete.metu.edu.tr/files/irem_ozbilgin.jpg",
+research: ["Malzeme Bilimi ve Mühendisliği Temel Uygulamaları", "Sürdürülebilir Malzemeler"],
+details: ["Detaylı profil bilgisi için METE web sitesini ziyaret edebilirsiniz."],
+publications: []
+},
+{
+name: "Dr. Öğr. Üy. Şeniz Uçar", title: "Öğretim Üyesi",
+image: "https://mete.metu.edu.tr/sites/mete.metu.edu.tr/files/seniz_ucar.jpg",
+research: ["Kristalizasyon", "Parçacık Dizaynı"],
+details: ["Doktora: 2017, NTNU, Norveç", "Laboratuvar: Kristalizasyon ve Parçacık Dizaynı (CPD Lab)"],
+publications: [
+"Predicting Silica Deposition from Superheated, Pressurized Steam Using Numerical Modeling of Nucleation, Agglomeration and Deposition (2023)",
+"Exploiting Saturation Regimes and Surface Effects to Tune Composite Design: Single Platelet Nanocomposites of Peptoid Nanosheets and CaCO3 (2024)",
+"Optimizing lithium carbonate recovery through gas-liquid reactive crystallization of lithium hydroxide and carbon dioxide (2025)"
+ ]
+},
+{
+name: "Prof. Dr. Y. Eren Kalay", title: "Öğretim Üyesi",
+image: "https://mete.metu.edu.tr/sites/mete.metu.edu.tr/files/eren_kalay.jpg",
+research: ["Malzeme Karakterizasyonu", "Metalik Alaşımlar", "Elektronik Paketleme"],
+details: ["Doktora: 2009, Iowa State University, ABD", "Laboratuvar: Metal Alaşımları Geliştirme Elektron Mikroskobu Lab."],
+publications: [
+"Temperature-dependent evolution of Al-Ge microstructures for wafer-level vacuum packaging of MEMS devices (2025)",
+"Development of novel high entropy alloy feedstocks for powder bed fusion using equimolar CoFeNiCuMn composition (2024)",
+"Microstructure and Mechanical Properties of CoFeNiCuMn High-Entropy Alloys Produced by Laser Powder Bed Fusion (2024)"
+ ]
+}
+];
+
+const grid = document.getElementById('facultyGrid');
+if (grid) {
+facultyData.forEach((prof, index) => {
+const card = document.createElement('a');
+card.className = 'faculty-card';
+card.onclick = (e) => {
+e.preventDefault();
+openModal(index, facultyData);
+};
+
+const fallbackImg = https://ui-avatars.com/api/?name=${encodeURIComponent(prof.name)}&background=2c3e50&color=fff&size=128`;
+
+card.innerHTML = &lt;div class="faculty-img"&gt; &lt;img src="${prof.image}" alt="{fallbackImg}';">
+</div>
+<h3>{prof.title}</p>
+<div class="btn-link">Çalışma Alanlarını Gör</div>
+`;
+grid.appendChild(card);
+});
+}
+} catch (e) {
+console.error("Hoca kartları yüklenirken hata oluştu:", e);
+}
+
+// 3. Grafikler - Chart.js
+try {
+if (typeof Chart !== 'undefined') {
+const chartRed = '#cb2027';
+const chartPalette = ['#cb2027', '#2c3e50', '#e67e22', '#27ae60', '#8e44ad', '#3498db'];
+
+if(document.getElementById('yksLineChart')) {
+new Chart(document.getElementById('yksLineChart'), {
+type: 'line',
+data: {
+labels: ['2020', '2021', '2022', '2023', '2024'],
+datasets: [{
+label: 'Başarı Sırası',
+data: [18948, 18223, 13604, 8660, 7310],
+borderColor: chartRed,
+backgroundColor: 'rgba(203,32,39,0.15)',
+fill: true,
+tension: 0.3,
+pointBackgroundColor: chartRed
+}]
+},
+options: {
+responsive: true,
+plugins: { title: { display: true, text: 'Sayısal Başarı Sırası' } },
+scales: { y: { reverse: true } }
+}
+});
+}
+
+if(document.getElementById('mezunBarChart')) {
+new Chart(document.getElementById('mezunBarChart'), {
+type: 'bar',
+data: {
+labels: ['Lisans', 'Yüksek Lisans', 'Doktora'],
+datasets: [{
+label: 'Yıllık Ortalama Mezun Sayısı',
+data: [55, 17, 3],
+backgroundColor: chartPalette
+}]
+},
+options: {
+responsive: true,
+plugins: { legend: { display: false } }
+}
+});
+}
+
+if(document.getElementById('facultyPieChart')) {
+new Chart(document.getElementById('facultyPieChart'), {
+type: 'pie',
+data: {
+labels: ['Profesör', 'Doçent', 'Dr. Öğr. Üyesi', 'Öğretim Görevlisi', 'Araştırma Görevlisi'],
+datasets: [{
+data: [11, 2, 6, 2, 20],
+backgroundColor: chartPalette
+}]
+},
+options: {
+responsive: true,
+plugins: { title: { display: true, text: 'Unvana Göre Dağılım' }, legend: { position: 'bottom' } }
+}
+});
+}
+
+if(document.getElementById('facultyBarChart')) {
+new Chart(document.getElementById('facultyBarChart'), {
+type: 'bar',
+data: {
+labels: ['Profesör', 'Doçent', 'Dr. Öğr. Üyesi', 'Öğretim Görevlisi', 'Araştırma Görevlisi'],
+datasets: [{
+label: 'Kişi Sayısı',
+data: [11, 2, 6, 2, 20],
+backgroundColor: chartPalette
+}]
+},
+options: {
+responsive: true,
+indexAxis: 'y',
+plugins: { legend: { display: false }, title: { display: true, text: 'Unvana Göre Kişi Sayısı' } }
+}
+});
+}
+} else {
+console.warn("Chart.js yüklenemediği için grafikler çizilemedi.");
+}
+} catch (e) {
+console.error("Grafikler oluşturulurken hata:", e);
+}
+
+// Sidebar Scroll Takibi
+try {
+const sections = document.querySelectorAll("section");
+const navLi = document.querySelectorAll(".nav-links li a");
+window.addEventListener("scroll", () => {
+let current = "";
+sections.forEach((section) => {
+const sectionTop = section.offsetTop;
+if (pageYOffset >= (sectionTop - 150)) {
+current = section.getAttribute("id");
+}
+});
+navLi.forEach((a) => {
+a.classList.remove("active");
+if (a.getAttribute("href").includes(current)) {
+a.classList.add("active");
+}
+});
+});
+} catch (e) { console.error("Menü takibi hatası:", e); }
+});
+
+// Global Modal Fonksiyonları
+const modal = document.getElementById('facultyModal');
+
+function openModal(index, facultyData) {
+const prof = facultyData[index];
+document.getElementById('modalName').innerText = prof.name;
+
+const resUl = document.getElementById('modalResearch');
+resUl.innerHTML = '';
+prof.research.forEach(item => {
+let li = document.createElement('li');
+li.innerText = item;
+resUl.appendChild(li);
+});
+
+const detUl = document.getElementById('modalDetails');
+detUl.innerHTML = '';
+prof.details.forEach(item => {
+let li = document.createElement('li');
+li.innerHTML = <strong&gt;${item.split(':')[0]}:</strong> ${item.split(':')[1] || ''};
+if(item.indexOf(':') === -1) li.innerHTML = item;
+detUl.appendChild(li);
+});
+
+const pubSection = document.getElementById('modalPublicationsContainer');
+const pubUl = document.getElementById('modalPublications');
+pubUl.innerHTML = '';
+
+if (prof.publications && prof.publications.length > 0) {
+pubSection.style.display = 'block';
+prof.publications.forEach(item => {
+let li = document.createElement('li');
+li.innerHTML = &bull; ${item};
+pubUl.appendChild(li);
+});
+} else {
+pubSection.style.display = 'none';
+}
+
+modal.style.display = "block";
+}
+
+function closeModal() {
+modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+if (event.target == modal) {
+modal.style.display = "none";
+}
+}
+</script>
+</body>
+</html>
