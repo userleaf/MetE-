@@ -6,6 +6,7 @@
     <title>ODTÜ METE - Kapsamlı Tanıtım Sunumu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <style>
         :root {
             --odtu-red: #cb2027;
@@ -776,9 +777,17 @@
                 <ul id="modalResearch"></ul>
                 <h4>Laboratuvar & Akademik Bilgiler</h4>
                 <ul id="modalDetails"></ul>
+                
+                <!-- YENİ: Dinamik Projeler Alanı -->
+                <div id="modalProjectsContainer" style="display: none; margin-bottom: 20px;">
+                    <h4>Yürütülen Projeler</h4>
+                    <ul id="modalProjects" style="font-size: 14.5px; line-height: 1.5; color: var(--text-gray); padding-left: 15px; list-style-type: disc;"></ul>
+                </div>
+
+                <!-- Dinamik Yayınlar Alanı -->
                 <div id="modalPublicationsContainer" style="display: none;">
                     <h4>Öne Çıkan Yayınlar (Son 5 Yıl)</h4>
-                    <ul id="modalPublications" style="font-size: 14.5px; line-height: 1.5; color: var(--text-gray); padding-left: 15px; list-style-type: none;"></ul>
+                    <ul id="modalPublications" style="font-size: 14.5px; line-height: 1.5; color: var(--text-gray); padding-left: 15px; list-style-type: disc;"></ul>
                 </div>
             </div>
         </div>
