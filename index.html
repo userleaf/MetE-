@@ -342,7 +342,7 @@
         
         .modal-body li { margin-bottom: 8px; }
 
-        /* Accordion for FAQ */
+        /* Accordion for FAQ & Courses */
         .accordion {
             background-color: var(--white);
             color: var(--dark-blue);
@@ -372,10 +372,7 @@
         .panel-content { padding: 20px 0; }
         .panel.show-last { border-bottom: 1px solid #ddd; border-radius: 0 0 10px 10px;}
 
-        /* =========================================
-           MOBİL UYUM (RESPONSIVE) VE ÖLÇEKLENDİRME 
-           ========================================= */
-
+        /* Mobil Uyum */
         @media (max-width: 992px) {
             .grid-3, .grid-4, .grid-sectors {
                 grid-template-columns: 1fr 1fr;
@@ -383,90 +380,35 @@
         }
 
         @media (max-width: 768px) {
-            .dashboard {
-                flex-direction: column;
-                display: block;
-            }
-            
+            .dashboard { flex-direction: column; display: block; }
             .sidebar {
-                width: 100%;
-                height: auto;
-                position: sticky;
-                top: 0;
-                flex-direction: row;
-                align-items: center;
-                padding: 10px;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-                z-index: 999;
+                width: 100%; height: auto; position: sticky; top: 0;
+                flex-direction: row; align-items: center; padding: 10px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.15); z-index: 999;
             }
-
             .sidebar-header {
-                padding: 5px 10px;
-                text-align: left;
-                min-width: max-content;
-                background: transparent;
+                padding: 5px 10px; text-align: left; min-width: max-content; background: transparent;
             }
-            
             .sidebar-header h1 { font-size: 18px; }
             .sidebar-header h2 { display: none; }
-
             .nav-links {
-                display: flex;
-                margin: 0;
-                padding: 0 10px;
-                overflow-x: auto; 
-                white-space: nowrap;
-                scrollbar-width: none; 
+                display: flex; margin: 0; padding: 0 10px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; 
             }
             .nav-links::-webkit-scrollbar { display: none; } 
-            
-            .nav-links li a {
-                padding: 10px 15px;
-                font-size: 14px;
-                border-left: none;
-                border-bottom: 3px solid transparent;
-            }
-            
+            .nav-links li a { padding: 10px 15px; font-size: 14px; border-left: none; border-bottom: 3px solid transparent; }
             .nav-links li a:hover, .nav-links li a.active {
-                border-left-color: transparent;
-                border-bottom-color: var(--odtu-red);
-                background-color: transparent;
+                border-left-color: transparent; border-bottom-color: var(--odtu-red); background-color: transparent;
             }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .section {
-                padding: 40px 20px; 
-                min-height: auto;
-            }
-
-            .grid-2, .grid-3, .grid-4, .grid-sectors {
-                grid-template-columns: 1fr; 
-                gap: 20px;
-            }
-
-            .hero-img-container {
-                min-height: 200px;
-            }
-
+            .main-content { margin-left: 0; }
+            .section { padding: 40px 20px; min-height: auto; }
+            .grid-2, .grid-3, .grid-4, .grid-sectors { grid-template-columns: 1fr; gap: 20px; }
+            .hero-img-container { min-height: 200px; }
             .section-title { font-size: 26px; }
             .lead-text { font-size: 16px; }
             p, .accordion { font-size: 15px; }
             .card { padding: 20px; }
-
-            .modal-content {
-                width: 95%;
-                margin: 15% auto;
-            }
-            
-            .modal-body {
-                padding: 15px;
-                max-height: 65vh;
-                overflow-y: auto;
-            }
-            
+            .modal-content { width: 95%; margin: 15% auto; }
+            .modal-body { padding: 15px; max-height: 65vh; overflow-y: auto; }
             .modal-header h2 { font-size: 20px; }
         }
     </style>
@@ -591,9 +533,10 @@
                 </div>
             </section>
 
-            <!-- 4. DERS PROGRAMI -->
+            <!-- 4. DERS PROGRAMI (TÜM DÖNEMLER VE EKSİKSİZ SEÇMELİLER) -->
             <section id="ders-programi" class="section">
                 <h2 class="section-title">Lisans Ders Programı (%100 İngilizce)</h2>
+                
                 <div class="grid-4">
                     <div class="card" style="padding:20px;">
                         <h4 style="color:var(--odtu-red); margin-top:0;">1. Dönem</h4>
@@ -601,7 +544,8 @@
                             <li>MATH 119 Genel Matematik I</li>
                             <li>PHYS 105 Genel Fizik I</li>
                             <li>CHEM 111 Genel Kimya I</li>
-                            <li>ME 105 Teknik Resim</li>
+                            <li>ME 105 Mühendislik Çizimi I</li>
+                            <li>ENG 101 Akademik İngilizce I</li>
                         </ul>
                     </div>
                     <div class="card" style="padding:20px;">
@@ -610,16 +554,18 @@
                             <li>MATH 120 Genel Matematik II</li>
                             <li>PHYS 106 Genel Fizik II</li>
                             <li>CHEM 112 Genel Kimya II</li>
-                            <li>METE 102 Malzeme Mühendisliğine Giriş</li>
+                            <li>METE 102 Malzeme Müh. Giriş</li>
+                            <li>ENG 102 Akademik İngilizce II</li>
                         </ul>
                     </div>
                     <div class="card" style="padding:20px;">
                         <h4 style="color:var(--odtu-red); margin-top:0;">3. Dönem</h4>
                         <ul style="padding-left:15px; font-size:14px;">
                             <li>MATH 219 Türevsel Denklemler</li>
-                            <li>CENG 240 Mühendisler için Python ile Programlama</li>
+                            <li>CENG 240 Müh. İçin Programlama</li>
                             <li>METE 201 Malzeme Bilimi I</li>
                             <li>METE 203 Termodinamik I</li>
+                            <li>ENG 211 İngilizce Okuma ve İletişim</li>
                         </ul>
                     </div>
                     <div class="card" style="padding:20px;">
@@ -628,23 +574,105 @@
                             <li>METE 202 Malzeme Bilimi II</li>
                             <li>ES 223 Statik ve Mukavemet</li>
                             <li>METE 204 Termodinamik II</li>
-                            <li>ES 361 Hesaplama Metotları</li>
+                            <li>METE 206 Malzeme Laboratuvarı</li>
+                            <li>METE 215 Malzeme İşleme Laboratuvarı</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="padding:20px;">
+                        <h4 style="color:var(--odtu-red); margin-top:0;">5. Dönem</h4>
+                        <ul style="padding-left:15px; font-size:14px;">
+                            <li>METE 301 Faz Dönüşümleri</li>
+                            <li>METE 303 Malz. Mekanik Davranışı</li>
+                            <li>METE 305 Taşıma Olayları</li>
+                            <li>METE 307 Metalik Malzemeler ve Metalografi</li>
+                            <li>TURK 303 Türkçe I</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="padding:20px;">
+                        <h4 style="color:var(--odtu-red); margin-top:0;">6. Dönem</h4>
+                        <ul style="padding-left:15px; font-size:14px;">
+                            <li>METE 302 Katılaşma Prensipleri</li>
+                            <li>METE 306 Birincil Malzeme İşleme Kimyası</li>
+                            <li>METE 308 Malzemelerin Fiziksel Temelleri</li>
+                            <li>METE 310 Malzemelerin Yapısı ve Karakterizasyonu</li>
+                            <li>TURK 304 Türkçe II</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="padding:20px;">
+                        <h4 style="color:var(--odtu-red); margin-top:0;">7. Dönem</h4>
+                        <ul style="padding-left:15px; font-size:14px;">
+                            <li>METE 401 Malzeme Mühendisliği Tasarımı I</li>
+                            <li>Teknik Seçmeli Ders I</li>
+                            <li>Teknik Seçmeli Ders II</li>
+                            <li>Sınırlı Seçmeli Ders I</li>
+                            <li>Serbest Seçmeli Ders</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="padding:20px;">
+                        <h4 style="color:var(--odtu-red); margin-top:0;">8. Dönem</h4>
+                        <ul style="padding-left:15px; font-size:14px;">
+                            <li>METE 402 Malzeme Mühendisliği Tasarımı II</li>
+                            <li>Teknik Seçmeli Ders III</li>
+                            <li>Teknik Seçmeli Ders IV</li>
+                            <li>Sınırlı Seçmeli Ders II</li>
+                            <li>Serbest Seçmeli Ders</li>
                         </ul>
                     </div>
                 </div>
-                <button class="accordion" style="margin-top:20px;">Teknik Seçmeli Dersler — Tümünü Gör (28 Ders)</button>
+                
+                <button class="accordion" style="margin-top:20px;">Bölüm İçi Teknik Seçmeli Dersler (Tam Liste)</button>
                 <div class="panel">
                     <div class="panel-content">
-                        <div class="grid-2">
-                            <ul style="font-size:14px; padding-left:20px;">
+                        <div style="background-color: #fef2f2; border-left: 4px solid var(--odtu-red); padding: 15px; margin-bottom: 20px; border-radius: 4px;">
+                            <p style="margin: 0; font-size: 15px; color: var(--text-dark);">
+                                <i class="fa-solid fa-file-pdf" style="color: var(--odtu-red); margin-right: 8px; font-size: 18px;"></i>
+                                Seçmeli derslerin detaylı içeriklerine ve bölümün güncel resmi kataloğuna
+                                <a href="https://adayogrenci.metu.edu.tr/sites/default/files/metalurji_ve_malzeme_muhendisligi.pdf" target="_blank" style="color: var(--dark-blue); font-weight: bold; text-decoration: none; border-bottom: 1px dashed var(--dark-blue); transition: 0.2s;">
+                                    ODTÜ Aday Öğrenci Tanıtım Kitapçığı (PDF)
+                                </a> 
+                                üzerinden ulaşabilirsiniz.
+                            </p>
+                        </div>
+                        
+                        <div class="grid-3">
+                            <ul style="font-size:14px; padding-left:20px; line-height: 1.6;">
+                                <li>METE 349 Malzemelerin Elektriksel, Manyetik ve Optik Öz.</li>
+                                <li>METE 350 Malzemelerin Çok Ölçekli Modellenmesi ve Simülasyonu</li>
+                                <li>METE 407 Kimyasal Metalurji II</li>
+                                <li>METE 411 Çelik Kimyasal Metalurjisi</li>
                                 <li>METE 414 Çelikler ve Çelik Üretim Teknolojileri</li>
+                                <li>METE 416 Yakıtlar ve Fırınlar</li>
+                                <li>METE 417 Metalurjide Bilgisayar Uygulamaları</li>
+                                <li>METE 418 Birim İşlemler ve Ön İşlem Süreçleri</li>
                                 <li>METE 421 Cam Bilimi ve Teknolojisi</li>
-                                <li>METE 442 Enerji Depolama Cihazları</li>
+                                <li>METE 422 Yapısal Seramikler ve Seramik Kompozitler</li>
+                                <li>METE 433 Organik Elektronik Malzemeleri</li>
                             </ul>
-                            <ul style="font-size:14px; padding-left:20px;">
-                                <li>METE 460 Polimerlerle Mühendislik</li>
+                            <ul style="font-size:14px; padding-left:20px; line-height: 1.6;">
+                                <li>METE 434 Seramik İşleme Prensipleri</li>
+                                <li>METE 435 Dökümhane Laboratuvarı I</li>
+                                <li>METE 436 Dökümhane Laboratuvarı II</li>
+                                <li>METE 440 Metalurji Endüstrilerinde Toplam Kalite Yönetimi</li>
+                                <li>METE 441 Ergitme ve Döküm</li>
+                                <li>METE 442 Enerji Depolama Cihazları</li>
+                                <li>METE 444 Elektronik ve Manyetik Seramikler</li>
+                                <li>METE 451 Seramik Malzemeler</li>
+                                <li>METE 453 Polimer Malzemeler</li>
+                                <li>METE 456 Malzemelerin Yüzey İşlemleri</li>
+                                <li>METE 462 Malzeme Üretiminde Kalıntı Gerilme</li>
+                            </ul>
+                            <ul style="font-size:14px; padding-left:20px; line-height: 1.6;">
+                                <li>METE 464 Metallerin Isıl İşlemi</li>
+                                <li>METE 466 Toz Metalurjisi</li>
+                                <li>METE 468 Kaynak Metalurjisi</li>
+                                <li>METE 470 Kompozit Malzemeler</li>
                                 <li>METE 472 Metallerin Korozyonu ve Oksitlenmesi</li>
+                                <li>METE 474 Failure</li>
+                                <li>METE 477 Mühendislik Malzemelerinin Test ve Değerlendirmesi</li>
+                                <li>METE 478 Malzemelerin Tahribatsız Değerlendirmesi</li>
+                                <li>METE 480 Malzeme Biliminde Elektron Mikroskobu</li>
                                 <li>METE 487 İnce Film Malzemeleri ve Uygulamaları</li>
+                                <li>METE 489 Biyomalzemeler</li>
                             </ul>
                         </div>
                     </div>
@@ -663,11 +691,11 @@
                     <div class="card">
                         <h3 style="margin-bottom: 15px;">Çalışılan Sektörler</h3>
                         <ul style="font-size: 16px; line-height:1.7; padding-left:20px; color: var(--text-dark);">
-                            <li><strong>Savunma ve Havacılık:</strong> ASELSAN, ROKETSAN, TUSAŞ, TEI, FNSS, Lockheed Martin</li>
-                            <li><strong>Otomotiv Sanayii:</strong> Ford Otosan, MAN, Türk Traktör, Tofaş, Toyota</li>
-                            <li><strong>Demir-Çelik:</strong> Erdemir, İsdemir, Asil Çelik, Borçelik, KARDEMİR</li>
-                            <li><strong>Polimer, Plastik & Cam:</strong> Lassa, Kordsa, Petlas, Şişecam</li>
-                            <li><strong>Enerji & Yarı İletkenler:</strong> BOTAŞ, ASPİLSAN, Yonga Teknoloji</li>
+                            <li><strong>Savunma ve Havacılık:</strong> ASELSAN, ROKETSAN, TUSAŞ, TEI, FNSS, Baykar, Havelsan</li>
+                            <li><strong>Otomotiv Sanayii:</strong> Ford Otosan, MAN, Türk Traktör, Tofaş, Toyota, Oyak Renault</li>
+                            <li><strong>Demir-Çelik ve Döküm:</strong> Erdemir, İsdemir, Asil Çelik, Borçelik, KARDEMİR, Erkunt</li>
+                            <li><strong>Polimer, Plastik & Cam:</strong> Lassa, Kordsa, Petlas, Şişecam, Korozo</li>
+                            <li><strong>Enerji & Yarı İletkenler:</strong> BOTAŞ, ASPİLSAN, Yonga Teknoloji, TÜBİTAK MAM</li>
                         </ul>
                     </div>
                 </div>
@@ -693,7 +721,7 @@
                     </div>
                     <div class="card" style="padding:20px;">
                         <h3 style="color:var(--odtu-red); font-size: 18px;"><i class="fa-solid fa-laptop-code"></i> Hesaplamalı Malzeme & Karakterizasyon</h3>
-                        <p style="font-size: 14px;">Makine öğrenmesi (CHGNet) ile metal oksitlerde oksijen boşluğu oluşum enerjilerinin tahmini ve çekirdek/kabuk nanoplateletlerin detaylı TEM karakterizasyonu gibi ileri teknikleri birleştiriyoruz.</p>
+                        <p style="font-size: 14px;">Makine öğrenmesi (CHGNet) ile metal oksitlerde oksijen boşluğu enerjilerinin tahmini ve çekirdek/kabuk nanoplateletlerin detaylı TEM karakterizasyonu gibi ileri teknikleri birleştiriyoruz.</p>
                     </div>
                 </div>
                 
@@ -709,7 +737,8 @@
                     </div>
                 </div>
             </section>
-            <!-- 7. AKADEMİK KADRO (İNTERAKTİF) -->
+
+            <!-- 7. AKADEMİK KADRO -->
             <section id="akademik-kadro" class="section">
                 <h2 class="section-title">Akademik Kadro ve Araştırma Alanları</h2>
                 <p class="lead-text">Bölümümüz, alanında lider ve uluslararası deneyime sahip güçlü bir akademik kadroya sahiptir.<br><strong style="color:var(--odtu-red); font-size:16px;">Hocalarımızın detaylı çalışma alanlarını, laboratuvar bilgilerini ve öne çıkan yayınlarını görmek için kartlara tıklayınız.</strong></p>
@@ -751,16 +780,25 @@
             <!-- 8. SSS -->
             <section id="sss" class="section">
                 <h2 class="section-title">Sıkça Sorulan Sorular</h2>
-                <p class="lead-text" style="font-size:15px;">Aşağıdaki sorular bölümün resmi SSS sayfasından derlenmiştir.</p>
+                <p class="lead-text" style="font-size:15px;">Aşağıdaki sorular bölümü tercih etmeyi düşünen adayların en sık sorduğu sorulardan derlenmiştir.</p>
 
                 <button class="accordion">Neden Metalurji ve Malzeme Mühendisliği?</button>
-                <div class="panel"><div class="panel-content"><p>Yeni bir teknoloji fikri, genellikle o teknolojiye uygun malzeme geliştirilmeden hayata geçirilemez. Geniş istihdam ağı sayesinde her endüstride çalışabilirsiniz.</p></div></div>
+                <div class="panel"><div class="panel-content"><p>Yeni bir teknoloji fikri, genellikle o teknolojiye uygun malzeme geliştirilmeden hayata geçirilemez. Havacılıktan biyomedikale kadar teknolojinin temeli malzemelerdir. Geniş istihdam ağı sayesinde her endüstride Ar-Ge, üretim ve kalite kontrol aşamalarında çalışabilirsiniz.</p></div></div>
 
-                <button class="accordion">Dersler hep İngilizce mi? Zorluk çeker miyim?</button>
-                <div class="panel"><div class="panel-content"><p>Eğitim %100 İngilizcedir. ODTÜ Yabancı Diller Yüksekokulu, dili yeterli olmayan öğrencilere 1 yıllık yoğun hazırlık eğitimi vererek onları sürece kusursuz hazırlar.</p></div></div>
+                <button class="accordion">Dersler tamamen İngilizce mi? Zorluk çeker miyim?</button>
+                <div class="panel"><div class="panel-content"><p>Evet, eğitim dilimiz %100 İngilizcedir. ODTÜ Yabancı Diller Yüksekokulu, dili yeterli olmayan öğrencilere 1 yıllık yoğun hazırlık eğitimi vererek onları akademik sürece kusursuz bir şekilde hazırlar.</p></div></div>
 
                 <button class="accordion">Yandal veya çift anadal yapmak mümkün mü?</button>
-                <div class="panel"><div class="panel-content"><p>Gerekli şartlar sağlandığında mümkündür. Havacılık, Makine, Endüstri, Kimya Mühendisliği ve Fizik bölümleriyle yandal veya çift anadal programlarına katılabilirsiniz.</p></div></div>
+                <div class="panel"><div class="panel-content"><p>Kesinlikle mümkündür. Gerekli not ortalaması şartları sağlandığında Havacılık, Makine, Endüstri, Kimya Mühendisliği, Fizik ve Kimya gibi bölümlerle yandal veya çift anadal (ÇAP) programlarına katılabilirsiniz.</p></div></div>
+
+                <button class="accordion">Öğrencilik sırasında staj imkanları nasıldır?</button>
+                <div class="panel"><div class="panel-content"><p>Bölümümüzün sanayi ile güçlü bağları vardır. Öğrencilerimiz 2. ve 3. sınıfların yaz aylarında zorunlu stajlarını ASELSAN, TUSAŞ, Erdemir, Şişecam gibi dev sanayi kuruluşlarında veya TÜBİTAK MAM gibi araştırma merkezlerinde yaparak deneyim kazanırlar.</p></div></div>
+
+                <button class="accordion">Mezuniyet sonrası yurtdışı imkanları (Yüksek Lisans/Doktora) nasıl?</button>
+                <div class="panel"><div class="panel-content"><p>ODTÜ METE'nin uluslararası tanınırlığı (ABET akreditasyonu) çok yüksektir. Avrupa (özellikle Almanya ve İsviçre/Zürih gibi araştırma merkezleri) ve Amerika'daki saygın üniversitelerden tam burslu yüksek lisans ve doktora kabulleri alan birçok mezunumuz bulunmaktadır.</p></div></div>
+
+                <button class="accordion">Lisans öğrencileri laboratuvar araştırmalarına katılabilir mi?</button>
+                <div class="panel"><div class="panel-content"><p>Evet! İstekli lisans öğrencileri, hocalarımızın yürütmekte olduğu TÜBİTAK, Avrupa Birliği veya Sanayi Bakanlığı destekli projelerde (Hesaplamalı malzeme bilimi, nanoteknoloji, batarya tasarımı vb.) öğrenci asistan olarak veya proje gruplarına dahil olarak çalışabilirler.</p></div></div>
             </section>
         </main>
     </div>
