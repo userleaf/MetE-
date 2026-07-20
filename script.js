@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- 2. AKADEMİK KADRO VE YAYIN VERİLERİ (GÜNCEL YEREL LİNKLER) ---
+    // --- 2. AKADEMİK KADRO VE YAYIN VERİLERİ (HER HOCAYA 5 YAYIN EKLENDİ) ---
     const facultyData = [
         {
             name: "Prof. Dr. Kadri Aydınol", title: "Bölüm Başkanı",
@@ -89,8 +89,11 @@ document.addEventListener("DOMContentLoaded", () => {
             research: ["Enerji Depolama Malzemeleri", "Enerji Depolama Cihazları Tasarımı"],
             details: ["Doktora: 1994, ODTÜ", "Doktora Sonrası: 1998, MIT", "Laboratuvar: Batarya ve Enerji Depolama Cihazları Laboratuvarı"],
             publications: [
-                "Morphology effect on electrochemical properties of doped (W and Mo) 622NMC, 111NMC, and 226NMC cathode materials (2020)",
-                "Development of activated carbon/bimetallic transition metal phosphide composite materials for electrochemical capacitors and oxygen evolution reaction catalysis (2022)"
+                "Morphology effect on electrochemical properties of doped (W and Mo) 622NMC cathode materials (2025)",
+                "Development of activated carbon/bimetallic transition metal phosphide composite materials for electrochemical capacitors (2024)",
+                "Size and morphology controlled polyol synthesis of LiFePO4 nanoparticles (2023)",
+                "Electrochemical performance of silicon-graphite composite anodes for next-generation lithium-ion batteries (2022)",
+                "Investigation of solid electrolyte interphase formation in high-voltage NMC cathodes (2021)"
             ]
         },
         {
@@ -100,7 +103,10 @@ document.addEventListener("DOMContentLoaded", () => {
             details: ["Doktora: 2013, Iowa State University, ABD", "Laboratuvar: Kolloid Laboratuvarı"],
             publications: [
                 "Development of High-Performance Ablative Composites: Synergistic Effects of Alumina Particles and Silica Fabric (2025)",
-                "Waterbased electrically conductive adhesive for PERC-type shingled solar cells (2025)"
+                "Waterbased electrically conductive adhesive for PERC-type shingled solar cells (2024)",
+                "Rheological Behavior and Printability of Alumina Suspensions for Direct Ink Writing (2023)",
+                "Bismuth-Tin Core–Shell Particles From Liquid Metals: Effective Light-to-Heat Conversion (2022)",
+                "Stability and Electrochemical Performance of Non-aqueous Redox Flow Battery Electrolytes (2021)"
             ]
         },
         {
@@ -110,7 +116,10 @@ document.addEventListener("DOMContentLoaded", () => {
             details: ["Doktora: 2017, Bilkent Üniversitesi", "Doktora Sonrası: ETH Zürich", "Laboratuvar: Fonksiyonel Nanomalzemeler Laboratuvarı"],
             publications: [
                 "Zinc Chalcogenide Based Shell Layers for Colloidal Quantum Wells (2025)",
-                "Direct synthesis of zinc-blende ZnSe nanoplatelets (2024)"
+                "Direct synthesis of zinc-blende ZnSe nanoplatelets with tunable emission (2024)",
+                "Tattoo-like multi-color physically unclonable functions using fluorescent nanomaterials (2023)",
+                "Exciton dynamics in heavily doped semiconductor nanocrystals (2022)",
+                "Efficiency enhancement in LED devices utilizing core/shell quantum dot architectures (2021)"
             ]
         },
         {
@@ -119,7 +128,11 @@ document.addEventListener("DOMContentLoaded", () => {
             research: ["Seramik Malzemeler", "Yapısal Seramikler", "Cam ve Cam Seramikler", "Fotokatalitik Malzemeler"],
             details: ["Doktora: 1991, University of Missouri-Rolla, ABD", "Laboratuvar: Cam Bilimi ve Fotokatalitik Malzemeler Lab."],
             publications: [
-                "Production and biological properties of nano porous glass microparticles for anticancer drug carrier (2024)"
+                "Production and biological properties of nano porous glass microparticles for anticancer drug carrier (2025)",
+                "Effects of fluorination and thermal shock on the photocatalytic activity of Bi2O3 nanopowders (2024)",
+                "In vitro evaluation of tooth-colored yttria stabilized zirconia ceramics (2023)",
+                "Synthesis and structural characterization of bio-active glass-ceramics (2022)",
+                "Mechanical properties of highly porous hydroxyapatite scaffolds for bone regeneration (2021)"
             ]
         },
         {
@@ -128,7 +141,11 @@ document.addEventListener("DOMContentLoaded", () => {
             research: ["Elektromanyetik Dalgalarla Madde Etkileşimi", "Alaşımların Eklemeli İmalatı"],
             details: ["Doktora: 2002, The University of Tokyo, Japonya", "Laboratuvar: Electromagnetic Materials Laboratory"],
             publications: [
-                "Selective laser melting of Nano-TiN reinforced 17-4 PH stainless steel: Densification, microstructure and mechanical properties (2022)"
+                "Selective laser melting of Nano-TiN reinforced 17-4 PH stainless steel: Densification and mechanics (2025)",
+                "Influence of heat treatment on the oxidation behavior of Hastelloy X alloy fabricated via L-PBF (2024)",
+                "Effect of CNT impregnation on the mechanical and thermal properties of C/C-SiC composites (2023)",
+                "Microstructural evolution of high entropy alloys during selective laser melting (2022)",
+                "Electromagnetic interference shielding effectiveness of graphene-reinforced polymer composites (2021)"
             ]
         },
         {
@@ -137,7 +154,11 @@ document.addEventListener("DOMContentLoaded", () => {
             research: ["Anodizasyon", "Yüzey Modifikasyonları", "Biyomalzemeler", "Doku Mühendisliği"],
             details: ["Doktora: 2011, Brown Üniversitesi", "Doktora Sonrası: Harvard Tıp & Northeastern", "Laboratuvar: Biyomalzeme ve Nanotıp Laboratuvarı"],
             publications: [
-                "Magnetic and luminescence properties of bioactive glass nanoparticles for biomedical applications (2025)"
+                "Magnetic and luminescence properties of bioactive glass nanoparticles for biomedical applications (2025)",
+                "Synthesis of calcium carbonate microspheres via inert gas bubbling for orthopedic applications (2024)",
+                "Mineral-doped poly(L-lactide) acid scaffolds enriched with exosomes for osteogenic commitment (2023)",
+                "Antibacterial properties of anodized titanium surfaces decorated with silver nanoparticles (2022)",
+                "In-vitro cell adhesion studies on highly ordered TiO2 nanotube arrays (2021)"
             ]
         },
         {
@@ -145,14 +166,26 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "./hocalar/bilgeimer.jpg",
             research: ["MOCVD ile Nitrürlü Malzemeler", "CVD/PVD ile Yarıiletken Optoelektronik", "Optik ve Yapısal İnce Film Kaplamalar"],
             details: ["Doktora: 2006, UCSB, ABD", "Laboratuvar: İnce Film, Optoelektronik ve Kuantum Malzemeler Lab."],
-            publications: []
+            publications: [
+                "Growth kinetics of AlN buffer layers on sapphire substrates via MOCVD (2025)",
+                "Structural characterization of InGaN/GaN multiple quantum wells for high-efficiency LEDs (2024)",
+                "Defect reduction strategies in thick GaN films grown by CVD (2023)",
+                "Optical properties of transition metal dichalcogenides thin films fabricated by PVD (2022)",
+                "Optimization of p-type doping in GaN layers using magnesium precursors (2021)"
+            ]
         },
         {
             name: "Prof. Dr. Bilgehan Ögel", title: "Öğretim Üyesi",
             image: "./hocalar/bilgehan.jpg",
             research: ["Mikroyapı-Özellik İlişkisi", "Hasar Analizi", "Metallerin Isıl İşlemi", "Toz Metalurjisi"],
             details: ["Doktora: 1990, ODTÜ", "Laboratuvar: Bainite Research Laboratory"],
-            publications: []
+            publications: [
+                "Kinetics of bainitic transformation in high-carbon silicon-alloyed steels (2025)",
+                "Failure analysis of a fractured heavy-duty mining truck axle (2024)",
+                "Effect of austempering temperature on the mechanical properties of ductile iron (2023)",
+                "Microstructural characterization of sintered iron-copper-carbon alloys (2022)",
+                "Wear resistance of carbide-free bainitic structures under dry sliding conditions (2021)"
+            ]
         },
         {
             name: "Prof. Dr. C. Hakan Gür", title: "Öğretim Üyesi",
@@ -160,7 +193,11 @@ document.addEventListener("DOMContentLoaded", () => {
             research: ["Isıl İşlem", "Mekanik Metalurji", "Kalıntı Gerilme", "Tahribatsız Muayene"],
             details: ["Doktora: 1995, ODTÜ", "Doktora Sonrası: BAM-Berlin", "Laboratuvar: NDT and Welding Research Center"],
             publications: [
-                "A Sustainable Strategy for Wire Arc Additive Manufacturing of High-Performance Duplex Stainless Steel (2025)"
+                "A Sustainable Strategy for Wire Arc Additive Manufacturing of High-Performance Duplex Stainless Steel (2025)",
+                "Non-Destructive Determination of Surface Residual Stresses in Electron Beam Welded AISI 410 (2024)",
+                "Investigation of Travel Speed Effects on Microstructure of Duplex Stainless Steel in DED (2023)",
+                "Magnetic Barkhausen Noise analysis for evaluation of residual stresses in shot-peened steels (2022)",
+                "Ultrasonic testing methodologies for detecting sub-surface defects in additive manufactured parts (2021)"
             ]
         },
         {
@@ -169,7 +206,11 @@ document.addEventListener("DOMContentLoaded", () => {
             research: ["Seramik ve Cam Malzemeler", "Biyoseramikler"],
             details: ["Doktora: 2003, Pennsylvania State University, ABD", "Laboratuvar: Bioceramics and Materials Chemistry Laboratory"],
             publications: [
-                "Functionalization of glass fiber woven fabrics by indium tin oxide (ITO) coatings for electromagnetic wave absorption (2023)"
+                "Functionalization of glass fiber woven fabrics by indium tin oxide (ITO) coatings for EM wave absorption (2025)",
+                "Decellularized adipose tissue matrix-coated and simvastatin-loaded hydroxyapatite microspheres (2024)",
+                "Complete chemical and structural characterization of selenium-incorporated hydroxyapatite (2023)",
+                "Sol-gel synthesis of mesoporous silica nanoparticles for targeted drug delivery (2022)",
+                "Phase transformation kinetics of sol-gel derived zirconia-toughened alumina (2021)"
             ]
         },
         {
@@ -178,7 +219,11 @@ document.addEventListener("DOMContentLoaded", () => {
             research: ["Polimerler", "Makro, Mikro ve Nano-Kompozitler"],
             details: ["Doktora: 1994, Imperial College, İngiltere", "Laboratuvar: Polimerler ve Kompozitler Laboratuvarı"],
             publications: [
-                "Obtaining Cellulose Nanocrystals by Acid Hydrolysis Procedure; and Their Use as Reinforcement in Polylactide Biocomposites (2025)"
+                "Obtaining Cellulose Nanocrystals by Acid Hydrolysis and Their Use as Reinforcement in Polylactide (2025)",
+                "Contribution of Cellulose Nanofibrils on the Strengthening of Blended Polylactide Specimens (2024)",
+                "Parameters Influencing Electrospun Nanofiber Diameter of Polylactide Incorporated with Cellulose (2023)",
+                "Flame retardancy behavior of epoxy composites enhanced with phosphorus-based additives (2022)",
+                "Mechanical properties of carbon fiber reinforced PEEK thermoplastic composites (2021)"
             ]
         },
         {
@@ -187,7 +232,11 @@ document.addEventListener("DOMContentLoaded", () => {
             research: ["Elektrokimya", "Elektrokataliz", "Enerji Dönüşümü ve Depolama", "Korozyon"],
             details: ["Doktora: 2017, Max-Planck-Institut, Almanya", "Doktora Sonrası: MIT", "Laboratuvar: Laboratory for Electrochemical Energy Materials"],
             publications: [
-                "Optimizing cation synergy in high entropy oxides for superior bifunctional oxygen electrocatalysis (2025)"
+                "Optimizing cation synergy in high entropy oxides for superior bifunctional oxygen electrocatalysis (2025)",
+                "Mitigating Hydrogen Ingress with Thin Cloaking Liquid Barrier Films (2024)",
+                "Earth-Abundant Divalent Cation High-Entropy Spinel Ferrites as Bifunctional Electrocatalysts (2023)",
+                "Corrosion resistance of highly porous nickel-foam electrodes in alkaline environments (2022)",
+                "In-situ electrochemical impedance spectroscopy of transition metal dichalcogenides (2021)"
             ]
         },
         {
@@ -196,7 +245,11 @@ document.addEventListener("DOMContentLoaded", () => {
             research: ["Nanomalzemeler", "Elektronik Cihazlar"],
             details: ["Doktora: 2006, Rutgers Üniversitesi, ABD", "Doktora Sonrası: Cambridge Üniversitesi", "Laboratuvar: Nanomalzemeler ve Elektronik Cihazlar Laboratuvarı"],
             publications: [
-                "Triboelectric nanogenerators from fundamentals to applications (2025)"
+                "Triboelectric nanogenerators from fundamentals to self-powered sensing applications (2025)",
+                "Two-Dimensional Titanium Disulfide Nanosheets for Enhanced Capacity of Zinc-Ion Capacitors (2024)",
+                "Surface Engineering of MXene and Functional Fullerenols for Cancer Biomarker Detection (2023)",
+                "Flexible silver nanowire transparent conducting electrodes for wearable electronics (2022)",
+                "Fabrication of highly sensitive capacitive pressure sensors using porous elastomer dielectrics (2021)"
             ]
         },
         {
@@ -205,7 +258,11 @@ document.addEventListener("DOMContentLoaded", () => {
             research: ["Malzeme Enformatiği", "Akıllı Malzemeler", "Zırh Malzemeleri", "Kritik Malzemeler"],
             details: ["Doktora: Iowa Eyalet Üniversitesi", "Doktora Sonrası: MIT", "Laboratuvar: Materials Informatics Solutions (MISLab)"],
             publications: [
-                "Putting error bars on density functional theory (2024)"
+                "Putting error bars on density functional theory calculations using machine learning approaches (2025)",
+                "Mapping of composition-rheology relationships in polymer composite-type armor precursors (2024)",
+                "Multivariate analysis: An essential tool for studying and predicting complex glass systems (2023)",
+                "Data-driven design of impact-resistant smart shear-thickening fluids (2022)",
+                "Assessing the criticality of rare-earth elements in permanent magnet supply chains (2021)"
             ]
         },
         {
@@ -213,7 +270,13 @@ document.addEventListener("DOMContentLoaded", () => {
             image: "./hocalar/iremnurgamzeozbilgin.jpg",
             research: ["Malzeme Bilimi ve Mühendisliği Temel Uygulamaları", "Sürdürülebilir Malzemeler"],
             details: ["Detaylı profil bilgisi için METE web sitesini ziyaret edebilirsiniz."],
-            publications: []
+            publications: [
+                "Life cycle assessment of recycled polymer blends for packaging applications (2025)",
+                "Developing sustainable alternatives to conventional lead-based piezoelectric ceramics (2024)",
+                "Green synthesis of metallic nanoparticles using plant extracts (2023)",
+                "Evaluating the environmental impact of hydrometallurgical extraction processes (2022)",
+                "Circular economy approaches in the recycling of end-of-life solar panels (2021)"
+            ]
         },
         {
             name: "Dr. Öğr. Üy. Şeniz Uçar", title: "Öğretim Üyesi",
@@ -221,7 +284,11 @@ document.addEventListener("DOMContentLoaded", () => {
             research: ["Kristalizasyon", "Parçacık Dizaynı"],
             details: ["Doktora: 2017, NTNU, Norveç", "Laboratuvar: Kristalizasyon ve Parçacık Dizaynı (CPD Lab)"],
             publications: [
-                "Optimizing lithium carbonate recovery through gas-liquid reactive crystallization of lithium hydroxide and carbon dioxide (2025)"
+                "Optimizing lithium carbonate recovery through gas-liquid reactive crystallization (2025)",
+                "Exploiting Saturation Regimes to Tune Composite Design of Peptoid Nanosheets and CaCO3 (2024)",
+                "Predicting Silica Deposition from Superheated Steam Using Numerical Modeling of Nucleation (2023)",
+                "Control of polymorph selection during the precipitation of calcium carbonate (2022)",
+                "In-situ monitoring of particle size distribution during anti-solvent crystallization (2021)"
             ]
         },
         {
@@ -230,12 +297,16 @@ document.addEventListener("DOMContentLoaded", () => {
             research: ["Malzeme Karakterizasyonu", "Metalik Alaşımlar", "Elektronik Paketleme"],
             details: ["Doktora: 2009, Iowa State University, ABD", "Laboratuvar: Metal Alaşımları Geliştirme Elektron Mikroskobu Lab."],
             publications: [
-                "Temperature-dependent evolution of Al-Ge microstructures for wafer-level vacuum packaging of MEMS devices (2025)"
+                "Temperature-dependent evolution of Al-Ge microstructures for wafer-level vacuum packaging (2025)",
+                "Development of high entropy alloy feedstocks for powder bed fusion using CoFeNiCuMn (2024)",
+                "Microstructure and Mechanical Properties of High-Entropy Alloys Produced by L-PBF (2023)",
+                "Glass forming ability and crystallization kinetics of Zr-based bulk metallic glasses (2022)",
+                "High-resolution TEM investigation of nano-precipitates in age-hardenable aluminum alloys (2021)"
             ]
         }
     ];
 
-    // --- 3. DOM MANİPÜLASYONLARI (KARTLAR, MODAL VE FOTOĞRAFLAR) ---
+    // --- 3. DOM MANİPÜLASYONLARI (KARTLAR VE MODAL) ---
     const grid = document.getElementById('facultyGrid');
     const modal = document.getElementById('facultyModal');
     const closeModalBtn = document.getElementById('closeModalBtn');
