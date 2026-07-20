@@ -98,19 +98,13 @@ document.addEventListener("DOMContentLoaded", () => {
         new Chart(document.getElementById('cityPieChart'), {
             type: 'pie',
             data: {
-                labels: ['Ankara', 'İstanbul', 'İzmir', 'Kocaeli', 'Bursa', 'Eskişehir', 'Zonguldak', 'Diğer'],
+                labels: ['Yurtdışı', 'Yurtiçi'],
                 datasets: [{
                     // Orijinal grafikteki dilim büyüklüklerine göre yaklaşımlı oranlar
-                    data: [45, 20, 10, 7, 7, 4, 2, 5],
+                    data: [16,84],
                     backgroundColor: [
-                        '#c0392b', // Ankara (Büyük dilim)
-                        '#3498db', // İstanbul
-                        '#8cc63f', // İzmir
-                        '#9b59b6', // Kocaeli
-                        '#f1c40f', // Bursa
-                        '#34495e', // Eskişehir
-                        '#1abc9c', // Zonguldak
-                        '#95a5a6'  // Diğer
+                        '#c0392b', 
+                        '#3498db', 
                     ],
                     borderWidth: 2,
                     borderColor: '#ffffff'
