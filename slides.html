@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ODTÜ METE - Slayt Sunumu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <style>
+    :root {
+      --odtu-red: #cb2027;
+      --dark-blue: #2c3e50;
+      --bg-light: #f6f7fb;
+      --text-dark: #1f2937;
+      --text-gray: #4b5563;
+      --white: #fff;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg-light);
+      color: var(--text-dark);
+      overflow: hidden;
+    }
+    #slidesRoot {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      background: linear-gradient(140deg, #f7f8fb, #ecf0f7);
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: none;
+      padding: 4.5rem 4.5rem 5.5rem;
+      overflow-y: auto;
+      background: transparent;
+    }
+    .slide.active { display: block; }
+    .slide-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--white);
+      border-radius: 18px;
+      box-shadow: 0 16px 45px rgba(0,0,0,.09);
+      padding: 2rem 2.3rem;
+    }
+    h1, h2, h3, h4 { margin-top: 0; color: var(--dark-blue); }
+    h1 { font-size: clamp(1.8rem, 4vw, 3rem); }
+    h2 { font-size: clamp(1.4rem, 3vw, 2.2rem); }
+    p, li { line-height: 1.55; font-size: .98rem; color: var(--text-gray); }
+    .hero-img { width: 100%; border-radius: 12px; margin-bottom: 1.2rem; max-height: 380px; object-fit: cover; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.1rem; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: .9rem; }
+    .card { background: #fff; border: 1px solid #e5e7eb; border-top: 4px solid var(--odtu-red); border-radius: 10px; padding: .9rem; }
+    .card h4 { color: var(--odtu-red); margin-bottom: .4rem; }
+    .chart-wrap { min-height: 260px; display: flex; align-items: center; justify-content: center; }
+    canvas { max-width: 100%; max-height: 100%; }
+    table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+    th, td { border: 1px solid #e5e7eb; padding: .48rem .55rem; text-align: left; }
+    th { background: var(--dark-blue); color: #fff; }
+    tr.highlight { background: rgba(203, 32, 39, .09); font-weight: 700; color: var(--odtu-red); }
+    .faculty-head { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+    .faculty-head img { width: 120px; height: 120px; object-fit: cover; border-radius: 50%; border: 4px solid var(--dark-blue); }
+    .faculty-lists { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .faculty-lists ul { margin-top: .2rem; padding-left: 1rem; }
+    .small-note { font-size: .8rem; color: #6b7280; }
+    .social-icons { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+    .social-icons a { color: var(--dark-blue); text-decoration: none; font-weight: 600; }
+    .status {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,.72);
+      color: #fff;
+      padding: .5rem .85rem;
+      border-radius: 999px;
+      font-size: .88rem;
+      z-index: 20;
+      user-select: none;
+    }
+    .nav-zone {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 22vw;
+      z-index: 15;
+      cursor: pointer;
+    }
+    .nav-zone.left { left: 0; }
+    .nav-zone.right { right: 0; }
+    .toggle-zone {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 22vw;
+      right: 22vw;
+      z-index: 14;
+      cursor: pointer;
+    }
+    .zone-hint {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,.72);
+      color: #fff;
+      font-size: .8rem;
+      padding: .3rem .65rem;
+      border-radius: 999px;
+      z-index: 22;
+    }
+    @media (max-width: 980px) {
+      .slide { padding: 3.8rem 1rem 5rem; }
+      .slide-content { padding: 1rem; }
+      .grid-2, .grid-3, .grid-4, .faculty-lists { grid-template-columns: 1fr; }
+      .faculty-head { align-items: flex-start; flex-direction: column; }
+      .faculty-head img { width: 95px; height: 95px; }
+      .nav-zone { width: 28vw; }
+      .toggle-zone { left: 28vw; right: 28vw; }
+    }
+  </style>
+</head>
+<body>
+  <div id="slidesRoot">
+    <div class="status" id="slideStatus">1 / 1 • Oynatılıyor</div>
+
+    <article class="slide active">
+      <div class="slide-content">
+        <img class="hero-img" src="https://scontent-fra5-2.xx.fbcdn.net/v/t39.30808-6/285683941_489197153211888_477186428264213980_n.jpg?stp=dst-jpg_tt6&cstp=mx2048x1365&ctp=s2048x1365&_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=0vhNiGtAt0IQ7kNvwEK-MaK&_nc_oc=AdoAUyDpDlplKeNh1QnYVPNRwBQvl-J2_AXzb0WBD1hKakCQ-rfJbm_exELtQkblKNUfGcErjK-G-A-yOSKgjY2y&_nc_zt=23&_nc_ht=scontent-fra5-2.xx&_nc_gid=gsTYK9kNxMlqkGqEPuHUSw&_nc_ss=7b2a8&oh=00_AQD5hd3fMWvvktzO57cc3REcyXj5WRkQJC6IaBJlwscIgw&oe=6A63E948" alt="ODTÜ METE" onerror="this.onerror=null;this.src='https://via.placeholder.com/1200x500/2c3e50/ffffff?text=ODTU+METE';" />
+        <h1>Geleceğin Malzemelerini Birlikte Tasarlayalım</h1>
+        <p>1966'dan günümüze, Türkiye'nin lider Metalurji ve Malzeme Mühendisliği bölümü olarak atomik düzeyden makroskobik boyutlara kadar teknolojinin temelini oluşturan mühendisler yetiştiriyoruz.</p>
+      </div>
+    </article>
+
+    <article class="slide">
+      <div class="slide-content">
+        <h2>Neden ODTÜ METE?</h2>
+        <p>Birçok teknoloji fikri henüz uygun malzemeler geliştirilemediği için hayata geçirilememektedir. Yeni malzemelerin geliştirilmesi tüm teknoloji ve üretim süreçleri için stratejik öneme sahiptir.</p>
+        <h3>Tarihçe ve Misyon</h3>
+        <p>1966'da ODTÜ Metalurji Mühendisliği olarak kurulan bölüm 1995'te Metalurji ve Malzeme Mühendisliği adını almıştır. Lisans mezun sayısı 3.000'i, yüksek lisans ve doktora mezun sayısı 700'ü aşmıştır.</p>
+      </div>
+    </article>
+
+    <article class="slide">
+      <div class="slide-content">
+        <h2>Güçlü Yönler</h2>
+        <div class="grid-3">
+          <div class="card"><h4>ABET Akreditasyonu</h4><p>1996'dan beri sahip olunan ABET akreditasyonu ile uluslararası standartlarda eğitim sunulmaktadır.</p></div>
+          <div class="card"><h4>MATTER Dergisi</h4><p>2014'ten beri lisans öğrencilerinin bilimsel araştırmalarını yayınlayan MATTER dergisi bölüm tarafından yayımlanmaktadır.</p></div>
+          <div class="card"><h4>Araştırma Altyapısı</h4><p>XRD, SEM/TEM ve ileri laboratuvar ekipmanları ile kapsamlı araştırma altyapısı sağlanmaktadır.</p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="slide">
+      <div class="slide-content">
+        <h2>YKS Başarısı ve İstatistikler</h2>
+        <p>ODTÜ METE, alanında en yüksek başarı sıralamasıyla öğrenci kabul eden programdır.</p>
+        <table>
+          <thead><tr><th>Yıl</th><th>Kontenjan</th><th>Taban Puan</th><th>Başarı Sırası</th></tr></thead>
+          <tbody>
+            <tr class="highlight"><td>2024</td><td>62</td><td>509.03</td><td>7.310</td></tr>
+            <tr><td>2023</td><td>62</td><td>518.31</td><td>8.660</td></tr>
+            <tr><td>2022</td><td>82</td><td>506.24</td><td>13.604</td></tr>
+            <tr><td>2021</td><td>82</td><td>436.69</td><td>18.223</td></tr>
+            <tr><td>2020</td><td>82</td><td>495.01</td><td>18.948</td></tr>
+          </tbody>
+        </table>
+        <div class="card chart-wrap" style="margin-top:1rem;"><canvas id="yksLineChart"></canvas></div>
+      </div>
+    </article>
+
+    <article class="slide">
+      <div class="slide-content">
+        <h2>Lisans Ders Programı (%100 İngilizce) - 1-4. Dönem</h2>
+        <div class="grid-2">
+          <div class="card"><h4>1. Dönem</h4><ul><li>MATH 119</li><li>PHYS 105</li><li>CHEM 111</li><li>ME 105</li><li>ENG 101</li></ul></div>
+          <div class="card"><h4>2. Dönem</h4><ul><li>MATH 120</li><li>PHYS 106</li><li>CHEM 112</li><li>METE 102</li><li>ENG 102</li></ul></div>
+          <div class="card"><h4>3. Dönem</h4><ul><li>MATH 219</li><li>CENG 240</li><li>METE 201</li><li>METE 203</li><li>ENG 211</li></ul></div>
+          <div class="card"><h4>4. Dönem</h4><ul><li>METE 202</li><li>ES 223</li><li>METE 204</li><li>METE 206</li><li>METE 215</li></ul></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="slide">
+      <div class="slide-content">
+        <h2>Lisans Ders Programı - 5-8. Dönem ve Teknik Seçmeliler</h2>
+        <div class="grid-2">
+          <div class="card"><h4>5. Dönem</h4><ul><li>METE 301</li><li>METE 303</li><li>METE 305</li><li>METE 307</li><li>TURK 303</li></ul></div>
+          <div class="card"><h4>6. Dönem</h4><ul><li>METE 302</li><li>METE 306</li><li>METE 308</li><li>METE 310</li><li>TURK 304</li></ul></div>
+          <div class="card"><h4>7. Dönem</h4><ul><li>METE 401</li><li>Teknik Seçmeli I-II</li><li>Sınırlı Seçmeli I</li><li>Serbest Seçmeli</li></ul></div>
+          <div class="card"><h4>8. Dönem</h4><ul><li>METE 402</li><li>Teknik Seçmeli III-IV</li><li>Sınırlı Seçmeli II</li><li>Serbest Seçmeli</li></ul></div>
+        </div>
+        <div class="card" style="margin-top:1rem;">
+          <h4>Bölüm İçi Teknik Seçmeli Dersler (Örnekler)</h4>
+          <p>METE 349, 350, 407, 411, 414, 416, 417, 418, 421, 422, 433, 434, 435, 436, 440, 441, 442, 444, 451, 453, 456, 462, 464, 466, 468, 470, 472, 474, 477, 478, 480, 487, 489.</p>
+          <p class="small-note">Detaylar için: ODTÜ Aday Öğrenci Tanıtım Kitapçığı (PDF).</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="slide">
+      <div class="slide-content">
+        <h2>İstihdam ve Kariyer</h2>
+        <p><strong style="color:var(--odtu-red)">Mezunların %95'inden fazlası ilk 1 yıl içinde istihdam edilmektedir.</strong> Metalurji ve Malzeme Mühendisliği mezunları malzeme ilişkili sektörlerin genişliği sayesinde üretim, kalite, Ar-Ge ve inovatif tasarımda çalışmaktadır.</p>
+        <div class="grid-2">
+          <div>
+            <p>Mezunlarımız lisans son sınıfta iş teklifleri almakta; önemli sayıda mezun ise döküm, ısıl işlem, toz metalurjisi, yüzey kaplama, kompozit üretimi gibi alanlarda girişimcilik yapmaktadır.</p>
+          </div>
+          <div class="card">
+            <h4>Çalışılan Ana Sektörler</h4>
+            <ul>
+              <li>Savunma/Havacılık: ASELSAN, ROKETSAN, TUSAŞ, TEI, FNSS, Baykar, Havelsan</li>
+              <li>Otomotiv/Beyaz Eşya: Ford Otosan, MAN, Türk Traktör, Tofaş, Toyota, Oyak Renault</li>
+              <li>Demir-Çelik/Döküm: Erdemir, İsdemir, Asil Çelik, Borçelik, KARDEMİR, Erkunt</li>
+              <li>Polimer/Seramik/Cam: Lassa, Kordsa, Petlas, Şişecam, Korozo</li>
+              <li>Enerji/Elektronik: BOTAŞ, ASPİLSAN, Yonga Teknoloji, TÜBİTAK MAM</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="slide">
+      <div class="slide-content">
+        <h2>Son 10 Yıl Mezun Verileri ve Küresel Ağ</h2>
+        <div class="grid-2">
+          <div class="card"><h4>Mezunlarımız Hangi Sektörlerde Çalışıyor?</h4><div class="chart-wrap"><canvas id="sectorDoughnutChart"></canvas></div></div>
+          <div class="card"><h4>Mezunlarımız Yurtdışında Çalışabiliyor mu?</h4><div class="chart-wrap"><canvas id="cityPieChart"></canvas></div></div>
+        </div>
+        <div class="card" style="margin-top:1rem;">
+          <h4>Küresel Mezun Ağımız</h4>
+          <p>MIT, Columbia University, Argonne National Laboratory, University of California (Riverside), Wits University, Aalto University, University of Waterloo, UConn Tech Park gibi kurumlarda mezunlarımız görev almaktadır.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="slide">
+      <div class="slide-content">
+        <h2>Araştırma ve İnovasyon Vitrini</h2>
+        <div class="grid-2">
+          <div class="card"><h4>Enerji Depolama ve Dönüşümü</h4><p>Lityum-iyon bataryalar, sıvı akış sistemleri, elektrokatalizörler.</p></div>
+          <div class="card"><h4>Biyomalzemeler ve Nanotıp</h4><p>Doku mühendisliği, biyoseramikler, implant yüzey modifikasyonları.</p></div>
+          <div class="card"><h4>Eklemeli İmalat ve İleri Alaşımlar</h4><p>Yüksek entropili alaşımlar ve L-PBF üretim teknolojileri.</p></div>
+          <div class="card"><h4>Yeni Nesil Malzeme Araştırmaları</h4><p>Makine öğrenmesi, QD ekranlar, robotik metal keşfi, yeşil sentez.</p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="slide">
+      <div class="slide-content">
+        <h2>Mezun Dağılımı ve Araştırma Performansı</h2>
+        <div class="grid-2">
+          <div class="card"><h4>Yıllık Ortalama Mezun Dağılımı</h4><div class="chart-wrap"><canvas id="mezunBarChart"></canvas></div></div>
+          <div class="card"><h4>Yayın ve Proje Performansı</h4><p>Son 5 yılda toplam <strong style="color:var(--odtu-red)">157</strong> yayın ve <strong style="color:var(--odtu-red)">54</strong> araştırma projesi yürütülmüştür.</p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="slide">
+      <div class="slide-content">
+        <h2>Akademik Kadro Dağılımı</h2>
+        <div class="grid-2">
+          <div>
+            <table>
+              <thead><tr><th>Unvan</th><th>Kişi Sayısı</th></tr></thead>
+              <tbody>
+                <tr><td>Profesör</td><td>11</td></tr>
+                <tr><td>Doçent</td><td>2</td></tr>
+                <tr><td>Dr. Öğr. Üyesi</td><td>6</td></tr>
+                <tr><td>Öğretim Görevlisi</td><td>2</td></tr>
+                <tr><td>Araştırma Görevlisi</td><td>20</td></tr>
+                <tr class="highlight"><td>Toplam</td><td>41</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="grid-2">
+            <div class="card chart-wrap"><canvas id="facultyPieChart"></canvas></div>
+            <div class="card chart-wrap"><canvas id="facultyBarChart"></canvas></div>
+          </div>
+        </div>
+        <p class="small-note">Devam eden slaytlarda tüm öğretim üyeleri için tekil sayfalar vardır.</p>
+      </div>
+    </article>
+
+    <article class="slide">
+      <div class="slide-content">
+        <h2>Sıkça Sorulan Sorular</h2>
+        <div class="card">
+          <h4>Metalurji ve Malzeme Mühendisliği Nedir?</h4>
+          <p>Disiplinlerarası bir alan olup metal, seramik, polimer ve kompozit malzemelerin tasarımı, üretimi ve özellik optimizasyonunu kapsar.</p>
+          <h4>Hangi Alanlarda Çalışılır?</h4>
+          <p>Metalik/seramik malzemeler, polimer/kompozitler, nanomalzemeler/enerji, biyomalzemeler/elektronik; ayrıca yarı iletkenler, akıllı malzemeler, batarya teknolojileri ve uzay malzemeleri.</p>
+          <h4>İş Olanakları Nasıldır?</h4>
+          <p>Mezunların %95+ kısmı ilk yılda istihdam edilir; Demir-Çelik, Savunma, Otomotiv, Polimer/Cam gibi alanlarda çalışır.</p>
+          <h4>Mühendislik Erkek İşi midir?</h4>
+          <p>Hayır. Kadın mezunlarımız ağır sanayi, Ar-Ge, yöneticilik ve akademide güçlü temsile sahiptir.</p>
+          <h4>Eğitim Dili ve İngilizce</h4>
+          <p>Eğitim %100 İngilizcedir; hazırlık okulu desteği bulunur.</p>
+          <h4>Yandal/ÇAP/Erasmus</h4>
+          <p>Uygun not ortalaması ile yandal-çift anadal ve uluslararası değişim programları mümkündür.</p>
+          <h4>Staj Zorunluluğu</h4>
+          <p>2. ve 3. sınıf yazlarında 21'er iş günü zorunlu staj (MetE 300 ve 400) vardır.</p>
+          <h4>Lisansüstü ve Yurt Dışı</h4>
+          <p>Mezunlar MIT, Stanford, Oxford, ETH Zürih, Max Planck gibi kurumlardan kabul alabilmektedir.</p>
+          <h4>Öğrenci Kulüpleri</h4>
+          <p>Malzeme Bilimleri Topluluğu (MBT) ve Metalurji Topluluğu aktif olarak teknik/sosyal etkinlikler düzenler.</p>
+          <h4>Girişimcilik</h4>
+          <p>ODTÜ Teknokent ve ATOM desteğiyle mezunlarımız kendi şirketlerini kurabilmektedir.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="slide">
+      <div class="slide-content">
+        <h2>İletişim ve Kaynaklar</h2>
+        <p><a href="http://adayogrenci.metu.edu.tr/" target="_blank">Daha Fazla Bilgi İçin ODTÜ Aday Öğrenci Sayfası</a></p>
+        <div class="social-icons">
+          <a href="https://mete.metu.edu.tr/" target="_blank"><i class="fa-solid fa-globe"></i> Resmi Web Sitesi</a>
+          <a href="https://www.linkedin.com/company/metallurgical-and-materials-engineering-metu/" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+          <a href="https://www.youtube.com/@ODTUMetalurjiMalzeme" target="_blank"><i class="fa-brands fa-youtube"></i> YouTube</a>
+          <a href="https://www.instagram.com/odtumetalurjimalzeme/?hl=en" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div class="nav-zone left" id="prevZone" aria-label="Önceki"></div>
+  <div class="toggle-zone" id="toggleZone" aria-label="Oynat/Durdur"></div>
+  <div class="nav-zone right" id="nextZone" aria-label="Sonraki"></div>
+  <div class="zone-hint">Sol: Önceki • Orta: Oynat/Durdur • Sağ: Sonraki</div>
+
+  <script>
+    const facultyData = [
+      { name: "Prof. Dr. Kadri Aydınol", title: "Bölüm Başkanı", image: "./hocalar/kadri.jpg", research: ["Enerji Depolama Malzemeleri", "Lityum İyon Bataryalar", "Elektrokimyasal Sentezleme"], details: ["Doktora: 1994, ODTÜ", "Laboratuvar: Batarya ve Enerji Depolama Lab."], publications: [], projects: [] },
+      { name: "Doç. Dr. Simge Çınar Aygün", title: "Bölüm Başkan Yardımcısı", image: "./hocalar/simge.jpg", research: ["Sıvı Akış Bataryaları", "Reoloji", "Kolloid ve Yüzey Bilimi"], details: ["Doktora: 2013, Iowa State University", "Laboratuvar: Kolloid Laboratuvarı"], publications: [], projects: [] },
+      { name: "Dr. Öğr. Üy. Yusuf Keleştemur", title: "Bölüm Başkan Yardımcısı", image: "./hocalar/yusufkelestemur.png", research: ["Yarıiletken Nanokristaller", "Optoelektronik Uygulamalar"], details: ["Doktora: 2017, Bilkent Üniversitesi", "Laboratuvar: Fonksiyonel Nanomalzemeler Lab."], publications: [], projects: [] },
+      { name: "Prof. Dr. Abdullah Öztürk", title: "Öğretim Üyesi", image: "./hocalar/abdullah.jpg", research: ["Seramik Malzemeler", "Cam ve Cam Seramikler", "Biyoseramikler"], details: ["Doktora: 1991, University of Missouri-Rolla", "Laboratuvar: Cam Bilimi Lab."], publications: [], projects: [] },
+      { name: "Prof. Dr. Arcan F. Dericioğlu", title: "Öğretim Üyesi", image: "./hocalar/arcan.jpg", research: ["Eklemeli İmalat", "Kompozit Malzemeler", "Zırh Sistemleri"], details: ["Doktora: 2002, The University of Tokyo", "Laboratuvar: Electromagnetic Materials Lab."], publications: [], projects: [] },
+      { name: "Doç. Dr. Batur Ercan", title: "Öğretim Üyesi", image: "./hocalar/ercanbatur.jpg", research: ["Yüzey Mühendisliği", "Biyomalzemeler", "Doku Mühendisliği"], details: ["Doktora: 2011, Brown Üniversitesi", "Laboratuvar: Biyomalzeme ve Nanotıp Lab."], publications: [], projects: [] },
+      { name: "Doç. Dr. Bilge İmer", title: "Öğretim Üyesi", image: "./hocalar/bilgeimer.jpg", research: ["MOCVD ile Nitrürlü Malzemeler", "Optik İnce Film Kaplamalar"], details: ["Doktora: 2006, UCSB, ABD", "Laboratuvar: İnce Film ve Kuantum Malzemeler Lab."], publications: [], projects: [] },
+      { name: "Prof. Dr. Bilgehan Ögel", title: "Öğretim Üyesi", image: "./hocalar/bilgehan.jpg", research: ["Demir Çelik Metalurjisi", "Hasar Analizi", "Isıl İşlem"], details: ["Doktora: 1990, ODTÜ", "Laboratuvar: Bainite Research Laboratory"], publications: [], projects: [] },
+      { name: "Prof. Dr. C. Hakan Gür", title: "Öğretim Üyesi", image: "./hocalar/hakangur.jpg", research: ["Kalıntı Gerilme Analizi", "Tahribatsız Muayene (NDT)"], details: ["Doktora: 1995, ODTÜ", "Laboratuvar: NDT and Welding Research Center"], publications: [], projects: [] },
+      { name: "Prof. Dr. Caner Durucan", title: "Öğretim Üyesi", image: "./hocalar/canerdurucan.jpg", research: ["İleri Seramikler", "Sol-Jel Sentezi", "Optik Kaplamalar"], details: ["Doktora: 2003, Pennsylvania State University", "Laboratuvar: Bioceramics Lab."], publications: [], projects: [] },
+      { name: "Prof. Dr. Cevdet Kaynak", title: "Öğretim Üyesi", image: "./hocalar/cevdet.jpg", research: ["Mühendislik Polimerleri", "Nano-Kompozitler", "Alev Geciktiriciler"], details: ["Doktora: 1994, Imperial College", "Laboratuvar: Polimerler Laboratuvarı"], publications: [], projects: [] },
+      { name: "Doç. Dr. Çiğdem Toparlı", title: "Öğretim Üyesi", image: "./hocalar/cidemtoparli.png", research: ["Elektrokataliz", "Enerji Dönüşümü", "Metal Korozyonu"], details: ["Doktora: 2017, Max-Planck-Institut", "Laboratuvar: Electrochemical Energy Materials Lab."], publications: [], projects: [] },
+      { name: "Prof. Dr. H. Emrah Ünalan", title: "Öğretim Üyesi", image: "./hocalar/emrah.jpg", research: ["Giyilebilir Elektronik Cihazlar", "Nanoteller", "Esnek Sensörler"], details: ["Doktora: 2006, Rutgers Üniversitesi", "Laboratuvar: Nanomalzemeler ve Elektronik Cihazlar Lab."], publications: [], projects: [] },
+      { name: "Dr. Öğr. Üy. Irmak Sargın", title: "Öğretim Üyesi", image: "./hocalar/sargin.jpg", research: ["Malzeme Enformatiği", "Makine Öğrenmesi", "Akıllı Malzemeler"], details: ["Doktora: Iowa Eyalet Üniversitesi", "Laboratuvar: Materials Informatics Solutions Lab."], publications: [], projects: [] },
+      { name: "Dr. Öğr. Üy. İrem Nur Gamze Özbilgin", title: "Öğretim Üyesi", image: "./hocalar/iremnurgamzeozbilgin.jpg", research: ["Sürdürülebilir Malzeme Tasarımı", "Geri Dönüşüm Teknolojileri"], details: ["Detaylı bilgi için METE web sitesini ziyaret ediniz."], publications: [], projects: [] },
+      { name: "Dr. Öğr. Üy. Şeniz Uçar", title: "Öğretim Üyesi", image: "./hocalar/seniz.jpg", research: ["Kristalizasyon Kinetiği", "İleri Parçacık Dizaynı"], details: ["Doktora: 2017, NTNU, Norveç", "Laboratuvar: Kristalizasyon ve Parçacık Dizaynı Lab."], publications: [], projects: [] },
+      { name: "Prof. Dr. Y. Eren Kalay", title: "Öğretim Üyesi", image: "./hocalar/eren.jpg", research: ["İleri Malzeme Karakterizasyonu", "Yüksek Entropili Alaşımlar"], details: ["Doktora: 2009, Iowa State University", "Laboratuvar: Elektron Mikroskobu Lab."], publications: [], projects: [] }
+    ];
+
+    const chartPalette = ['#cb2027', '#2c3e50', '#e67e22', '#27ae60', '#8e44ad', '#3498db'];
+    const chartBuilders = {
+      yksLineChart: () => new Chart(document.getElementById('yksLineChart'), {
+        type: 'line',
+        data: { labels: ['2020', '2021', '2022', '2023', '2024'], datasets: [{ label: 'Başarı Sırası', data: [18948, 18223, 13604, 8660, 7310], borderColor: '#cb2027', backgroundColor: 'rgba(203,32,39,0.15)', fill: true, tension: 0.3 }] },
+        options: { responsive: true, plugins: { title: { display: true, text: 'Sayısal Başarı Sırası (Küçük Değer = Daha Başarılı)' } }, scales: { y: { reverse: true } } }
+      }),
+      sectorDoughnutChart: () => new Chart(document.getElementById('sectorDoughnutChart'), {
+        type: 'doughnut',
+        data: { labels: ['Akademik', 'Savunma Sanayi', 'Demir-Çelik ve Döküm', 'Otomotiv Sanayi', 'Enerji', 'Bilişim', 'Kompozit', 'Diğer'], datasets: [{ data: [26, 24, 18, 15, 5, 1, 1, 10], backgroundColor: ['#c0392b','#2980b9','#8e44ad','#8cc63f','#16a085','#f39c12','#e67e22','#7f8c8d'] }] },
+        options: { responsive: true, plugins: { legend: { position: 'right' } }, cutout: '58%' }
+      }),
+      cityPieChart: () => new Chart(document.getElementById('cityPieChart'), {
+        type: 'pie',
+        data: { labels: ['Yurtdışı', 'Yurtiçi'], datasets: [{ data: [16, 84], backgroundColor: ['#c0392b','#3498db'] }] },
+        options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+      }),
+      mezunBarChart: () => new Chart(document.getElementById('mezunBarChart'), {
+        type: 'bar',
+        data: { labels: ['Lisans', 'Yüksek Lisans', 'Doktora'], datasets: [{ label: 'Yıllık Ortalama Mezun Sayısı', data: [55, 17, 3], backgroundColor: chartPalette }] },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+      }),
+      facultyPieChart: () => new Chart(document.getElementById('facultyPieChart'), {
+        type: 'pie',
+        data: { labels: ['Profesör', 'Doçent', 'Dr. Öğr. Üyesi', 'Öğretim Görevlisi', 'Araştırma Görevlisi'], datasets: [{ data: [11, 2, 6, 2, 20], backgroundColor: chartPalette }] },
+        options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+      }),
+      facultyBarChart: () => new Chart(document.getElementById('facultyBarChart'), {
+        type: 'bar',
+        data: { labels: ['Profesör', 'Doçent', 'Dr. Öğr. Üyesi', 'Öğretim Görevlisi', 'Araştırma Görevlisi'], datasets: [{ label: 'Kişi Sayısı', data: [11, 2, 6, 2, 20], backgroundColor: chartPalette }] },
+        options: { responsive: true, indexAxis: 'y', plugins: { legend: { display: false } } }
+      })
+    };
+    const chartInitState = {};
+
+    function isSameProfessor(name1, name2) {
+      if (!name1 || !name2) return false;
+      const c1 = name1.replace(/Prof\.|Dr\.|Doç\.|Öğr\.|Üy\./gi, '').trim().toLowerCase();
+      const c2 = name2.replace(/Prof\.|Dr\.|Doç\.|Öğr\.|Üy\./gi, '').trim().toLowerCase();
+      const w1 = c1.split(/\s+/).filter(w => w.length > 2);
+      const w2 = c2.split(/\s+/).filter(w => w.length > 2);
+      let matches = 0;
+      w1.forEach((w) => { if (w2.includes(w)) matches++; });
+      return matches >= 2;
+    }
+
+    function attachCsvData() {
+      return new Promise((resolve) => {
+        if (typeof Papa === 'undefined') return resolve();
+        Papa.parse('data.csv', {
+          download: true,
+          header: false,
+          skipEmptyLines: true,
+          complete: function(results) {
+            const rows = results.data;
+            let currentProfRawName = '';
+            for (let i = 2; i < rows.length; i++) {
+              const row = rows[i];
+              if (row[0] && row[0].trim() !== '') currentProfRawName = row[0].trim();
+              if (!currentProfRawName) continue;
+              const profIndex = facultyData.findIndex((p) => isSameProfessor(p.name, currentProfRawName));
+              if (profIndex === -1) continue;
+              const prof = facultyData[profIndex];
+
+              const pubName = row[4] ? row[4].trim() : '';
+              const pubYear = row[5] ? row[5].trim() : '';
+              const pubJournal = row[7] ? row[7].trim() : '';
+              const pubDOI = row[9] ? row[9].trim() : '';
+              if (pubName && !prof.publications.some((p) => p.includes(pubName))) {
+                let pubHtml = `<strong>${pubYear || ''}</strong> - ${pubName} <em>(${pubJournal || ''})</em>`;
+                if (pubDOI) pubHtml += ` <a href="${pubDOI}" target="_blank">[DOI]</a>`;
+                prof.publications.push(pubHtml);
+              }
+
+              const projType = row[1] ? row[1].trim() : '';
+              const projName = row[2] ? row[2].trim() : '';
+              const projDates = row[3] ? row[3].trim() : '';
+              if (projName && !prof.projects.some((p) => p.includes(projName))) {
+                prof.projects.push(`<strong>${projType}</strong>: ${projName} <em>[${projDates}]</em>`);
+              }
+            }
+            resolve();
+          },
+          error: function() { resolve(); }
+        });
+      });
+    }
+
+    function createFacultySlides() {
+      const root = document.getElementById('slidesRoot');
+      facultyData.forEach((prof) => {
+        const fallbackImg = `https://ui-avatars.com/api/?name=${encodeURIComponent(prof.name)}&background=2c3e50&color=fff&size=128`;
+        const facultySlide = document.createElement('article');
+        facultySlide.className = 'slide';
+        facultySlide.innerHTML = `
+          <div class="slide-content">
+            <div class="faculty-head">
+              <img src="${prof.image}" alt="${prof.name}" onerror="this.onerror=null;this.src='${fallbackImg}';" />
+              <div>
+                <h2>${prof.name}</h2>
+                <p><strong>${prof.title}</strong></p>
+              </div>
+            </div>
+            <div class="faculty-lists">
+              <div class="card">
+                <h4>Araştırma Alanları</h4>
+                <ul>${prof.research.map((item) => `<li>${item}</li>`).join('')}</ul>
+                <h4>Laboratuvar & Akademik Bilgiler</h4>
+                <ul>${prof.details.map((item) => {
+                  if (!item.includes(':')) return `<li>${item}</li>`;
+                  const [k, ...rest] = item.split(':');
+                  return `<li><strong>${k}:</strong>${rest.join(':')}</li>`;
+                }).join('')}</ul>
+              </div>
+              <div class="card">
+                <h4>Yürütülen Projeler</h4>
+                ${prof.projects.length ? `<ul>${prof.projects.slice(0, 12).map((p) => `<li>${p}</li>`).join('')}</ul>` : '<p>Henüz proje bilgisi eklenmedi.</p>'}
+                <h4>Öne Çıkan Yayınlar (Son 5 Yıl)</h4>
+                ${prof.publications.length ? `<ul>${prof.publications.slice(0, 12).map((p) => `<li>${p}</li>`).join('')}</ul>` : '<p>Henüz yayın bilgisi eklenmedi.</p>'}
+              </div>
+            </div>
+          </div>`;
+        root.appendChild(facultySlide);
+      });
+    }
+
+    let slides = [];
+    let currentSlide = 0;
+    let isPlaying = true;
+    const statusEl = document.getElementById('slideStatus');
+
+    function ensureChartsForCurrentSlide() {
+      const activeSlide = slides[currentSlide];
+      if (!activeSlide) return;
+      activeSlide.querySelectorAll('canvas[id]').forEach((canvas) => {
+        const id = canvas.id;
+        if (!chartBuilders[id] || chartInitState[id]) return;
+        chartBuilders[id]();
+        chartInitState[id] = true;
+      });
+    }
+
+    function updateStatus() {
+      statusEl.textContent = `${currentSlide + 1} / ${slides.length} • ${isPlaying ? 'Oynatılıyor' : 'Duraklatıldı'}`;
+    }
+
+    function showSlide(index) {
+      if (!slides.length) return;
+      const fixedIndex = (index + slides.length) % slides.length;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = fixedIndex;
+      slides[currentSlide].classList.add('active');
+      ensureChartsForCurrentSlide();
+      updateStatus();
+    }
+
+    function nextSlide() { showSlide(currentSlide + 1); }
+    function prevSlide() { showSlide(currentSlide - 1); }
+
+    function togglePlayPause() {
+      isPlaying = !isPlaying;
+      updateStatus();
+    }
+
+    document.getElementById('nextZone').addEventListener('click', nextSlide);
+    document.getElementById('prevZone').addEventListener('click', prevSlide);
+    document.getElementById('toggleZone').addEventListener('click', togglePlayPause);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+      if (e.key === ' ') {
+        e.preventDefault();
+        togglePlayPause();
+      }
+    });
+
+    setInterval(() => { if (isPlaying) nextSlide(); }, 10000);
+
+    (async function init() {
+      await attachCsvData();
+      createFacultySlides();
+      slides = Array.from(document.querySelectorAll('.slide'));
+      slides.forEach((slide, i) => slide.classList.toggle('active', i === 0));
+      ensureChartsForCurrentSlide();
+      updateStatus();
+    })();
+  </script>
+</body>
+</html>
